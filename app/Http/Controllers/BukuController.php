@@ -172,4 +172,19 @@ class BukuController extends Controller
             return redirect()->back()->with('error', 'Gagal menambahkan buku: ' . $e->getMessage());
         }
     }
+
+        public function show_edit_buku()
+    {
+        if (!Auth::check()) {
+            return redirect()->route('login')->with('error', 'Silakan login terlebih dahulu.');
+        }
+
+        if (Auth::user()->role !== 'petugas') {
+            abort(403, 'Anda tidak punya akses.');
+        }
+
+        return view('edit_buku', [
+            "title" => "Edit Buku",
+        ]);
+    }
 }

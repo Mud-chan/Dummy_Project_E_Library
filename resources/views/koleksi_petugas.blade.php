@@ -50,10 +50,12 @@
                         </div>
 
                         <div class="book-tags">
+                            <a href="{{ route('edit.buku') }}" style="text-decoration: none;">
                             <div class="tag">
                                 <img src="../assets/images/edit-fill-1480.svg" alt="Action tag" />
                                 <span>Edit</span>
                             </div>
+                            </a>
                             <div class="tag">
                                 <img src="../assets/images/trash-bin-trash.svg" alt="Historical tag" />
                                 <span>Hapus</span>
