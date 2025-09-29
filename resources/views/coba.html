@@ -1,0 +1,942 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HandleIt - Discover Popular Books & Trending Titles | Book Platform</title>
+  <meta name="description" content="Explore popular books, trending titles, and discover new reads on HandleIt. Browse by categories like Novel, Manga, Manhwa and genres including Action, Adventure, Horror, Mystery, Fantasy." />
+  <meta name="keywords" content="books, reading, novels, manga, manhwa, book discovery, popular books, trending books, book platform" />
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="HandleIt - Discover Popular Books & Trending Titles" />
+  <meta property="og:description" content="Explore popular books, trending titles, and discover new reads on HandleIt. Browse by categories and genres for the perfect book." />
+
+  <style>
+    /* Reset and base styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Overpass', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background-color: #ffffff;
+      color: #000000;
+      line-height: 1.5;
+    }
+
+    /* Layout components */
+    .main-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.25);
+      min-height: 100vh;
+    }
+
+    .content-wrapper {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+      width: 90%;
+      margin-top: 40px;
+      margin-bottom: 10px;
+    }
+
+    .layout-container {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: flex-start;
+      width: 100%;
+      gap: 24px;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      display: none;
+      flex-direction: column;
+      justify-content: flex-start;
+      width: 248px;
+      margin-top: 6px;
+    }
+
+    .sidebar-logo {
+      width: 94px;
+      height: 36px;
+    }
+
+    .category-title {
+      font-size: 18px;
+      font-family: Overpass;
+      font-weight: 600;
+      line-height: 23px;
+      text-align: left;
+      color: #9b9b9b;
+      margin-top: 68px;
+    }
+
+    .sidebar-menu {
+      margin-top: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .menu-section {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .menu-item {
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-start;
+      align-items: center;
+      gap: 18px;
+      padding: 10px 10px 10px 0;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .menu-item:hover {
+      background-color: #f3f4f6;
+      border-radius: 8px;
+    }
+
+    .menu-icon {
+      width: 18px;
+      height: 16px;
+    }
+
+    .menu-text {
+      font-size: 18px;
+      font-family: Overpass;
+      font-weight: 400;
+      line-height: 23px;
+      text-align: left;
+      color: #000000;
+    }
+
+    .genre-title {
+      font-size: 18px;
+      font-family: Overpass;
+      font-weight: 600;
+      line-height: 23px;
+      text-align: left;
+      color: #9b9b9b;
+      margin-top: 14px;
+      margin-bottom: 8px;
+    }
+
+    .dropdown-arrow {
+      width: 14px;
+      height: 6px;
+    }
+
+    /* Header */
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      margin-bottom: 24px;
+    }
+
+    .search-container {
+      display: flex;
+      align-items: center;
+      width: 100%;
+      max-width: 400px;
+      position: relative;
+    }
+
+    .search-input {
+      width: 100%;
+      padding: 4px 62px 4px 22px;
+      border: 2px solid #dddddd;
+      border-radius: 24px;
+      font-size: 16px;
+      font-family: Overpass;
+      font-weight: 300;
+      line-height: 28px;
+      outline: none;
+      transition: border-color 0.3s ease;
+    }
+
+    .search-input:focus {
+      border-color: #4F46E5;
+    }
+
+    .search-icon {
+      position: absolute;
+      right: 12px;
+      width: 40px;
+      height: 40px;
+      cursor: pointer;
+    }
+
+    .header-nav {
+      display: none;
+      flex-direction: row;
+      gap: 28px;
+      align-items: center;
+    }
+
+    .nav-menu {
+      display: flex;
+      flex-direction: row;
+      gap: 44px;
+      align-items: center;
+    }
+
+    .nav-item {
+      font-size: 18px;
+      font-family: Overpass;
+      font-weight: 400;
+      line-height: 28px;
+      color: #000000;
+      text-decoration: none;
+      cursor: pointer;
+      transition: color 0.3s ease;
+    }
+
+    .nav-item:hover {
+      color: #4F46E5;
+    }
+
+    .profile-image {
+      width: 50px;
+      height: 50px;
+      border-radius: 24px;
+    }
+
+    .hamburger {
+      display: block;
+      background: none;
+      border: none;
+      font-size: 24px;
+      cursor: pointer;
+      padding: 8px;
+    }
+
+    /* Main content */
+    .main-content {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      gap: 42px;
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      margin-bottom: 8px;
+    }
+
+    .section-title {
+      font-size: 20px;
+      font-family: Overpass;
+      font-weight: 600;
+      line-height: 31px;
+      color: #000000;
+    }
+
+    .see-more {
+      font-size: 16px;
+      font-family: Overpass;
+      font-weight: 400;
+      line-height: 28px;
+      color: #9b9b9b;
+      cursor: pointer;
+      transition: color 0.3s ease;
+    }
+
+    .see-more:hover {
+      color: #4F46E5;
+    }
+
+    .books-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+      width: 100%;
+    }
+
+    .book-cover {
+      width: 100%;
+      height: auto;
+      border-radius: 20px;
+      transition: transform 0.3s ease;
+      cursor: pointer;
+    }
+
+    .book-cover:hover {
+      transform: scale(1.05);
+    }
+
+    /* Trending section */
+    .trending-section {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      width: 100%;
+    }
+
+    .trending-title {
+      font-size: 20px;
+      font-family: Overpass;
+      font-weight: 600;
+      line-height: 37px;
+      color: #000000;
+      align-self: flex-start;
+    }
+
+    .trending-list {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      width: 100%;
+    }
+
+    .trending-item {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      padding: 20px;
+      background-color: rgba(246, 231, 174, 0.4);
+      border-radius: 20px;
+    }
+
+    .trending-content {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .trending-image {
+      width: 100px;
+      height: 150px;
+      border-radius: 20px;
+      align-self: center;
+    }
+
+    .book-info {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .book-header {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .book-stats {
+      display: flex;
+      flex-direction: row;
+      gap: 20px;
+      align-items: center;
+      margin-top: 8px;
+    }
+
+    .stat-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .stat-icon {
+      width: 14px;
+      height: 12px;
+    }
+
+    .author-name {
+      font-size: 16px;
+      font-family: Overpass;
+      font-weight: 400;
+      line-height: 28px;
+      color: #000000;
+    }
+
+    .book-title {
+      font-size: 16px;
+      font-family: Overpass;
+      font-weight: 600;
+      line-height: 28px;
+      color: #000000;
+    }
+
+    .book-description {
+      font-size: 14px;
+      font-family: Overpass;
+      font-weight: 300;
+      line-height: 21px;
+      text-align: justify;
+      color: #000000;
+      margin-top: 12px;
+    }
+
+    .book-tags {
+      display: flex;
+      flex-direction: row;
+      gap: 8px;
+      margin-top: 4px;
+    }
+
+    .book-tag {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 8px;
+      background-color: #f6e7ae;
+      border-radius: 5px;
+    }
+
+    .tag-icon {
+      width: 14px;
+      height: 14px;
+    }
+
+    .tag-text {
+      font-size: 14px;
+      font-family: Overpass;
+      font-weight: 300;
+      line-height: 22px;
+      color: #000000;
+    }
+
+    .view-more-btn {
+      font-size: 20px;
+      font-family: Overpass;
+      font-weight: 400;
+      line-height: 31px;
+      color: #000000;
+      background-color: #f6e7ae;
+      border: none;
+      border-radius: 10px;
+      padding: 10px 34px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      align-self: center;
+      margin-top: 12px;
+    }
+
+    .view-more-btn:hover {
+      background-color: #f0d96b;
+      transform: translateY(-2px);
+    }
+
+    /* Right sidebar */
+    .right-sidebar {
+      display: none;
+      flex-direction: column;
+      gap: 22px;
+      width: 24%;
+      margin-top: 32px;
+    }
+
+    .sidebar-section {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .collection-input {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      width: 100%;
+      padding: 16px 12px 16px 44px;
+      background-color: #f6e7ae;
+      border: none;
+      border-radius: 10px;
+      font-size: 18px;
+      font-family: Overpass;
+      font-weight: 400;
+      line-height: 23px;
+      color: #000000;
+      position: relative;
+    }
+
+    .input-icon {
+      position: absolute;
+      left: 16px;
+      width: 10px;
+      height: 10px;
+    }
+
+    .sidebar-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 12px 20px;
+      background-color: rgba(246, 231, 174, 0.4);
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .sidebar-item:hover {
+      background-color: rgba(246, 231, 174, 0.6);
+    }
+
+    .sidebar-item.active {
+      background-color: #f6e7ae;
+    }
+
+    .sidebar-icon {
+      width: 14px;
+      height: 12px;
+      align-self: center;
+    }
+
+    .sidebar-text {
+      font-size: 18px;
+      font-family: Overpass;
+      font-weight: 400;
+      line-height: 23px;
+      color: #7d7d7d;
+      margin-bottom: 6px;
+    }
+
+    .sidebar-item.active .sidebar-text {
+      color: #000000;
+    }
+
+    .filter-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+    }
+
+    .filter-title {
+      font-size: 24px;
+      font-family: Overpass;
+      font-weight: 600;
+      line-height: 31px;
+      color: #000000;
+    }
+
+    .filter-see-all {
+      font-size: 18px;
+      font-family: Overpass;
+      font-weight: 400;
+      line-height: 23px;
+      color: #9b9b9b;
+      cursor: pointer;
+    }
+
+    .filter-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    /* Typography */
+    h1 {
+      font-size: 24px;
+      font-family: Overpass;
+      font-weight: 600;
+      line-height: 31px;
+      color: #000000;
+    }
+
+    /* Interactive states */
+    button:focus, input:focus {
+      outline: 2px solid #4F46E5;
+      outline-offset: 2px;
+    }
+
+    button:active {
+      transform: scale(0.95);
+    }
+
+    /* Responsive media queries */
+    @media (min-width: 640px) {
+      .books-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+      }
+
+      .trending-item {
+        flex-direction: row;
+        gap: 28px;
+      }
+
+      .trending-image {
+        width: 134px;
+        height: 200px;
+        align-self: flex-start;
+      }
+
+      .section-title {
+        font-size: 24px;
+      }
+
+      .trending-title {
+        font-size: 24px;
+      }
+
+      .search-container {
+        max-width: 500px;
+      }
+    }
+
+    @media (min-width: 768px) {
+      .layout-container {
+        flex-direction: row;
+        gap: 44px;
+      }
+
+      .main-content {
+        width: 70%;
+      }
+
+      .books-grid {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 24px;
+      }
+
+      .hamburger {
+        display: none;
+      }
+
+      .header-nav {
+        display: flex;
+      }
+
+      .book-stats {
+        flex-direction: row;
+        justify-content: flex-end;
+        gap: 30px;
+      }
+
+      .author-name {
+        font-size: 18px;
+      }
+
+      .book-title {
+        font-size: 18px;
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .sidebar {
+        display: flex;
+      }
+
+      .right-sidebar {
+        display: flex;
+      }
+
+      .content-wrapper {
+        width: 90%;
+        max-width: 1310px;
+        margin: 0 auto;
+        padding: 40px 32px 10px;
+      }
+
+      .main-content {
+        width: 58%;
+      }
+
+      .search-container {
+        width: 52%;
+      }
+    }
+
+    @media (min-width: 1280px) {
+      .content-wrapper {
+        padding: 40px 24px 10px;
+      }
+    }
+  </style>
+<script type="module" src="https://static.rocket.new/rocket-web.js?_cfg=https%3A%2F%2Fakanemasay9577back.builtwithrocket.new&_be=https%3A%2F%2Fapplication.rocket.new&_v=0.1.8"></script>
+</head>
+<body>
+  <div class="main-container">
+    <div class="content-wrapper">
+      <div class="layout-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+          <img src="../assets/images/img_sidebar_logo.png" alt="HandleIt Logo" class="sidebar-logo" />
+
+          <h2 class="category-title">Kategori</h2>
+
+          <nav class="sidebar-menu">
+            <div class="menu-section">
+              <div class="menu-item">
+                <img src="../assets/images/img_vector.svg" alt="Novel icon" class="menu-icon" />
+                <span class="menu-text">Novel</span>
+              </div>
+              <div class="menu-item">
+                <img src="../assets/images/img_vector_teal_400.svg" alt="Manga icon" class="menu-icon" />
+                <span class="menu-text">Manga</span>
+              </div>
+              <div class="menu-item">
+                <img src="../assets/images/img_vector_teal_400_18x18.svg" alt="Manhwa icon" class="menu-icon" />
+                <span class="menu-text">Manhwa</span>
+              </div>
+            </div>
+
+            <div class="menu-section">
+              <h3 class="genre-title">Genre</h3>
+              <div class="menu-item">
+                <img src="../assets/images/img_image_1.png" alt="Action icon" class="menu-icon" />
+                <span class="menu-text">Action</span>
+              </div>
+              <div class="menu-item">
+                <img src="../assets/images/img_image_2.png" alt="Adventure icon" class="menu-icon" />
+                <span class="menu-text">Adventure</span>
+              </div>
+              <div class="menu-item">
+                <img src="../assets/images/img_image_3.png" alt="Horror icon" class="menu-icon" />
+                <span class="menu-text">Horor</span>
+              </div>
+              <div class="menu-item">
+                <img src="../assets/images/img_image_4.png" alt="Mystery icon" class="menu-icon" />
+                <span class="menu-text">Misteri</span>
+              </div>
+              <div class="menu-item">
+                <img src="../assets/images/img_image_5.png" alt="Fantasy icon" class="menu-icon" />
+                <span class="menu-text">Fantasy</span>
+              </div>
+              <div class="menu-item">
+                <img src="../assets/images/img_arrow_down.svg" alt="Expand icon" class="dropdown-arrow" />
+                <span class="menu-text">Lainnya</span>
+              </div>
+            </div>
+          </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+          <!-- Header -->
+          <header class="header">
+            <button class="hamburger" aria-label="Toggle menu">☰</button>
+
+            <div class="search-container">
+              <input type="search" class="search-input" placeholder="Empieza tu búsqueda" aria-label="Search books" />
+              <img src="../assets/images/img_searchicon.svg" alt="Search" class="search-icon" />
+            </div>
+
+            <nav class="header-nav">
+              <div class="nav-menu">
+                <a href="#" class="nav-item">Explorar</a>
+                <a href="#" class="nav-item">James F.</a>
+              </div>
+              <img src="../assets/images/img_unnamed_1.png" alt="User profile" class="profile-image" />
+            </nav>
+          </header>
+
+          <!-- Popular Books Section -->
+          <section>
+            <div class="section-header">
+              <h1>Buku Populer</h1>
+              <span class="see-more">ver más</span>
+            </div>
+
+            <div class="books-grid">
+              <img src="../assets/images/miruko_vol_10.jpg" alt="Los Compas book cover" class="book-cover" />
+              <img src="../assets/images/img_image_7.png" alt="La Buena Cocina book cover" class="book-cover" />
+              <img src="../assets/images/img_image_8.png" alt="Aquitania book cover" class="book-cover" />
+              <img src="../assets/images/img_image_9.png" alt="El bosque de los cuatro vientos book cover" class="book-cover" />
+            </div>
+          </section>
+
+          <!-- Trending Section -->
+          <section class="trending-section">
+            <h2 class="trending-title">Tendencias de esta semana</h2>
+
+            <div class="trending-list">
+              <article class="trending-item">
+                <img src="../assets/images/miruko_vol_10.jpg" alt="La leyenda de la peregrina book cover" class="trending-image" />
+
+                <div class="book-info">
+                  <div class="book-header">
+                    <div class="book-stats">
+                      <span class="author-name">Carmen Posadas</span>
+                      <div class="stat-item">
+                        <img src="../assets/images/img_vector_black_900.svg" alt="Likes" class="stat-icon" />
+                        <span>363</span>
+                      </div>
+                      <div class="stat-item">
+                        <img src="../assets/images/img_vector_black_900_12x18.svg" alt="Views" class="stat-icon" />
+                        <span>1.7k</span>
+                      </div>
+                    </div>
+                    <h3 class="book-title">La leyenda de la peregrina</h3>
+                  </div>
+
+                  <p class="book-description">
+                    La Peregrina es, sin duda, la perla sino más extraordinaria, más famosa de todos los
+                    tiempos. Procedente de las aguas del mar Caribe, fue entregada a Felipe II y desde
+                    entonces se convirtió en una de las joyas principales de la monarquía hispánica...
+                  </p>
+
+                  <div class="book-tags">
+                    <div class="book-tag">
+                      <img src="../assets/images/img_image_1.png" alt="Action genre" class="tag-icon" />
+                      <span class="tag-text">Acción</span>
+                    </div>
+                    <div class="book-tag">
+                      <img src="../assets/images/img_image_11.png" alt="Historical genre" class="tag-icon" />
+                      <span class="tag-text">Histórico</span>
+                    </div>
+                  </div>
+                </div>
+              </article>
+
+              <article class="trending-item">
+                <img src="../assets/images/img_image_12.png" alt="La cinta roja book cover" class="trending-image" />
+
+                <div class="book-info">
+                  <div class="book-header">
+                    <div class="book-stats">
+                      <span class="author-name">Lucy Adlington</span>
+                      <div class="stat-item">
+                        <img src="../assets/images/img_vector_black_900.svg" alt="Likes" class="stat-icon" />
+                        <span>128</span>
+                      </div>
+                      <div class="stat-item">
+                        <img src="../assets/images/img_visibility_24px.svg" alt="Views" class="stat-icon" />
+                        <span>1.2k</span>
+                      </div>
+                    </div>
+                    <h3 class="book-title">La cinta roja</h3>
+                  </div>
+
+                  <p class="book-description">
+                    A sus catorce años y en su primer día de trabajo, Ella se adentra en un mundo de sedas,
+                    tijeras, alfileres y bordados. Pero ése no es un taller de costura normal. Ni las suyas
+                    son clientas corrientes.
+                  </p>
+
+                  <div class="book-tags">
+                    <div class="book-tag">
+                      <img src="../assets/images/img_image_11.png" alt="Historical genre" class="tag-icon" />
+                      <span class="tag-text">Histórico</span>
+                    </div>
+                  </div>
+                </div>
+              </article>
+            </div>
+
+            <button class="view-more-btn">View More</button>
+          </section>
+        </main>
+
+        <!-- Right Sidebar -->
+        <aside class="right-sidebar">
+          <div class="sidebar-section">
+            <div class="collection-input">
+              <img src="../assets/images/img_vector_black_900_10x10.svg" alt="Collection icon" class="input-icon" />
+              <span>Colection</span>
+            </div>
+
+            <div class="sidebar-item">
+              <img src="../assets/images/img_group.svg" alt="Statistics icon" class="sidebar-icon" />
+              <span class="sidebar-text">Statistik</span>
+            </div>
+
+            <div class="sidebar-item">
+              <img src="../assets/images/img_vector_gray_600.svg" alt="Settings icon" class="sidebar-icon" />
+              <span class="sidebar-text">Pengaturan</span>
+            </div>
+          </div>
+
+          <div class="sidebar-section">
+            <div class="filter-header">
+              <h3 class="filter-title">Filter</h3>
+              <span class="filter-see-all">ver todo</span>
+            </div>
+
+            <div class="filter-list">
+              <div class="sidebar-item">
+                <img src="../assets/images/img_vector_gray_600_12x14.svg" alt="Reading icon" class="sidebar-icon" />
+                <span class="sidebar-text">Leyendo</span>
+              </div>
+
+              <div class="sidebar-item active">
+                <img src="../assets/images/img_image_11.png" alt="Historical icon" class="sidebar-icon" />
+                <span class="sidebar-text">Historical</span>
+              </div>
+
+              <div class="sidebar-item">
+                <img src="../assets/images/img_image_1.png" alt="Action icon" class="sidebar-icon" />
+                <span class="sidebar-text">Action</span>
+              </div>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Mobile menu toggle
+    const hamburger = document.querySelector('.hamburger');
+    const sidebar = document.querySelector('.sidebar');
+
+    hamburger?.addEventListener('click', () => {
+      sidebar.style.display = sidebar.style.display === 'flex' ? 'none' : 'flex';
+    });
+
+    // Filter item selection
+    const filterItems = document.querySelectorAll('.sidebar-item');
+    filterItems.forEach(item => {
+      item.addEventListener('click', () => {
+        filterItems.forEach(i => i.classList.remove('active'));
+        item.classList.add('active');
+      });
+    });
+
+    // Search functionality
+    const searchInput = document.querySelector('.search-input');
+    const searchIcon = document.querySelector('.search-icon');
+
+    searchIcon?.addEventListener('click', () => {
+      const query = searchInput.value.trim();
+      if (query) {
+        console.log('Searching for:', query);
+        // Implement search logic here
+      }
+    });
+
+    searchInput?.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        const query = searchInput.value.trim();
+        if (query) {
+          console.log('Searching for:', query);
+          // Implement search logic here
+        }
+      }
+    });
+
+    // Book cover hover effects
+    const bookCovers = document.querySelectorAll('.book-cover');
+    bookCovers.forEach(cover => {
+      cover.addEventListener('click', () => {
+        console.log('Book clicked:', cover.alt);
+        // Implement book detail navigation
+      });
+    });
+
+    // View More button
+    const viewMoreBtn = document.querySelector('.view-more-btn');
+    viewMoreBtn?.addEventListener('click', () => {
+      console.log('Loading more trending books...');
+      // Implement load more functionality
+    });
+  </script>
+</body>
+</html>

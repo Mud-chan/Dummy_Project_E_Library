@@ -80,7 +80,7 @@
                     </div>
 
                     <nav class="header-nav">
-                        <a href="#" class="nav-item">nama orang</a>
+                        <a href="#" class="nav-item">{{ Auth::user()->name }} ({{ Auth::user()->role }})</a>
                         <img src="../assets/images/miruko_vol_10.jpg" alt="User avatar" class="user-avatar" />
                     </nav>
                 </header>
@@ -115,11 +115,14 @@
                         <img src="../assets/images/setting-setting.svg" alt="Settings icon" />
                         <span>Peminjaman</span>
                     </div>
+                    <form method="POST" action="{{ route('logout') }}" id="logout-form">
+                        @csrf
+                        <div class="sidebar-item" onclick="document.getElementById('logout-form').submit();">
+                            <img src="../assets/images/setting-setting.svg" alt="Settings icon" />
+                            <span>Logout</span>
+                        </div>
+                    </form>
 
-                    <div class="sidebar-item">
-                        <img src="../assets/images/setting-setting.svg" alt="Settings icon" />
-                        <span>User</span>
-                    </div>
                 </div>
 
                 <div class="sidebar-section">
