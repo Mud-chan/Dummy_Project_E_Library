@@ -20,7 +20,8 @@ class Buku extends Model
         'deskripsi',
         'thumb',
         'pdf',
-        'kategori'
+        'kategori',
+        'date_created'
     ];
 
     public function guru()

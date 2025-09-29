@@ -8,7 +8,11 @@ Route::get('/', function () {
     return view('index');
 });
 Route::get('/koleksi', function () {
-    return view('koleksi');
+    return view('koleksi_petugas');
+});
+
+Route::get('/tambah', function () {
+    return view('tambah_buku');
 });
 
 // Register & Login
