@@ -14,21 +14,6 @@
                 <img src="../assets/images/miruko_vol_10.jpg" alt="Mieruko-chan" class="book-cover" />
                 <div class="book-title">Mieruko-chan</div>
             </div>
-
-            <div class="book-card">
-                <img src="../assets/images/miruko_vol_10.jpg" alt="Mieruko-chan" class="book-cover" />
-                <div class="book-title">Mieruko-chan</div>
-            </div>
-
-            <div class="book-card">
-                <img src="../assets/images/miruko_vol_10.jpg" alt="Mieruko-chan" class="book-cover" />
-                <div class="book-title">Mieruko-chan</div>
-            </div>
-
-            <div class="book-card">
-                <img src="../assets/images/miruko_vol_10.jpg" alt="Mieruko-chan" class="book-cover" />
-                <div class="book-title">Mieruko-chan</div>
-            </div>
         </div>
 
     </section>
