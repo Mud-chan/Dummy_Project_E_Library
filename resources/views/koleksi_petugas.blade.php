@@ -50,7 +50,7 @@
                         </div>
 
                         <div class="book-tags">
-                            <a href="{{ route('edit.buku') }}" style="text-decoration: none;">
+                            <a href="{{ route('edit.buku', $book->id_buku) }}" style="text-decoration: none;">
                             <div class="tag">
                                 <img src="../assets/images/edit-fill-1480.svg" alt="Action tag" />
                                 <span>Edit</span>

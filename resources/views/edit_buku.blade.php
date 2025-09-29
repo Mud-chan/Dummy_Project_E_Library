@@ -2,72 +2,151 @@
 @section('main')
     <link rel="stylesheet" href="{{ asset('assets/css/koleksi.css') }}">
 
+    <style>
+        .thumb-wrapper {
+            position: relative;
+            width: 180px;
+            height: 250px;
+            margin: 0 auto 20px auto;
+            cursor: pointer;
+        }
+
+        .thumb-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 8px;
+            border: 2px solid #ddd;
+        }
+
+        .thumb-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .thumb-wrapper:hover .thumb-overlay {
+            opacity: 1;
+        }
+
+        .thumb-input {
+            display: none;
+        }
+    </style>
+
     <div class="content-header">
         <h1>Edit Buku</h1>
     </div>
 
     <section class="form-container">
-        <form action="" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('update.buku', $book->id_buku) }}" method="POST" enctype="multipart/form-data">
             @csrf
-            <input type="text" name="judul" class="form-field" placeholder="Judul Buku" required
-                aria-label="Book title" />
-            <input type="text" name="penulis" class="form-field" placeholder="Penulis" required
-                aria-label="Author name" />
-            <textarea name="deskripsi" class="form-field textarea-field" placeholder="Deskripsi" aria-label="Book description"></textarea>
+            @method('PUT')
 
-            <!-- Upload cover buku -->
-            <div class="file-upload">
-                <label for="thumb">📂 Pilih Cover Buku</label>
-                <input type="file" name="thumb" id="thumb" class="form-field" accept="image/*" required>
+            <div class="thumb-wrapper" onclick="document.getElementById('thumb').click()">
+                <img src="{{ $book->thumb ? asset('uploaded_files/' . $book->thumb) : asset('assets/images/no-cover.png') }}"
+                    alt="Thumbnail" id="thumbPreview">
+                <div class="thumb-overlay">Edit</div>
             </div>
+            <input type="file" name="thumb" id="thumb" class="thumb-input" accept="image/*"
+                onchange="previewThumb(event)">
+
+            <input type="text" name="judul" class="form-field" placeholder="Judul Buku"
+                value="{{ old('judul', $book->judul) }}" required aria-label="Book title" />
+
+            <input type="text" name="penulis" class="form-field" placeholder="Penulis"
+                value="{{ old('penulis', $book->penulis) }}" required aria-label="Author name" />
+
+            <textarea name="deskripsi" class="form-field textarea-field" placeholder="Deskripsi" aria-label="Book description">{{ old('deskripsi', $book->deskripsi) }}</textarea>
 
             <div class="dropdown-row">
                 <div class="dropdown-container">
                     <select name="kategori" class="dropdown-field" aria-label="Select category" required>
                         <option value="">Kategori</option>
-                        <option value="novel">Novel</option>
-                        <option value="manga">Manga</option>
-                        <option value="manhwa">Manhwa</option>
+                        <option value="novel" {{ $book->kategori == 'novel' ? 'selected' : '' }}>Novel</option>
+                        <option value="manga" {{ $book->kategori == 'manga' ? 'selected' : '' }}>Manga</option>
+                        <option value="manhwa" {{ $book->kategori == 'manhwa' ? 'selected' : '' }}>Manhwa</option>
+                    </select>
+                </div>
+
+                @php
+                    $genres = $book->genre->pluck('genre')->toArray();
+                @endphp
+
+                <div class="dropdown-container">
+                    <select name="genre1" class="dropdown-field" aria-label="Select genre 1" required>
+                        <option value="">Genre 1</option>
+                        <option value="action" {{ isset($genres[0]) && $genres[0] == 'action' ? 'selected' : '' }}>Action
+                        </option>
+                        <option value="adventure" {{ isset($genres[0]) && $genres[0] == 'adventure' ? 'selected' : '' }}>
+                            Adventure</option>
+                        <option value="horror" {{ isset($genres[0]) && $genres[0] == 'horror' ? 'selected' : '' }}>Horror
+                        </option>
+                        <option value="mystery" {{ isset($genres[0]) && $genres[0] == 'mystery' ? 'selected' : '' }}>
+                            Mystery</option>
+                        <option value="fantasy" {{ isset($genres[0]) && $genres[0] == 'fantasy' ? 'selected' : '' }}>
+                            Fantasy</option>
                     </select>
                 </div>
 
                 <div class="dropdown-container">
                     <select name="genre2" class="dropdown-field" aria-label="Select genre 2">
                         <option value="">Genre 2</option>
-                        <option value="action">Action</option>
-                        <option value="adventure">Adventure</option>
-                        <option value="horror">Horror</option>
-                        <option value="mystery">Mystery</option>
-                        <option value="fantasy">Fantasy</option>
-                    </select>
-                </div>
-            </div>
-
-            <div class="dropdown-row">
-                <div class="dropdown-container">
-                    <select name="genre1" class="dropdown-field" aria-label="Select genre 1" required>
-                        <option value="">Genre 1</option>
-                        <option value="action">Action</option>
-                        <option value="adventure">Adventure</option>
-                        <option value="horror">Horror</option>
-                        <option value="mystery">Mystery</option>
-                        <option value="fantasy">Fantasy</option>
+                        <option value="action" {{ isset($genres[1]) && $genres[1] == 'action' ? 'selected' : '' }}>Action
+                        </option>
+                        <option value="adventure" {{ isset($genres[1]) && $genres[1] == 'adventure' ? 'selected' : '' }}>
+                            Adventure</option>
+                        <option value="horror" {{ isset($genres[1]) && $genres[1] == 'horror' ? 'selected' : '' }}>Horror
+                        </option>
+                        <option value="mystery" {{ isset($genres[1]) && $genres[1] == 'mystery' ? 'selected' : '' }}>
+                            Mystery</option>
+                        <option value="fantasy" {{ isset($genres[1]) && $genres[1] == 'fantasy' ? 'selected' : '' }}>
+                            Fantasy</option>
                     </select>
                 </div>
 
                 <div class="dropdown-container">
                     <select name="genre3" class="dropdown-field" aria-label="Select genre 3">
                         <option value="">Genre 3</option>
-                        <option value="action">Action</option>
-                        <option value="adventure">Adventure</option>
-                        <option value="horror">Horror</option>
-                        <option value="mystery">Mystery</option>
-                        <option value="fantasy">Fantasy</option>
+                        <option value="action" {{ isset($genres[2]) && $genres[2] == 'action' ? 'selected' : '' }}>Action
+                        </option>
+                        <option value="adventure" {{ isset($genres[2]) && $genres[2] == 'adventure' ? 'selected' : '' }}>
+                            Adventure</option>
+                        <option value="horror" {{ isset($genres[2]) && $genres[2] == 'horror' ? 'selected' : '' }}>Horror
+                        </option>
+                        <option value="mystery" {{ isset($genres[2]) && $genres[2] == 'mystery' ? 'selected' : '' }}>
+                            Mystery</option>
+                        <option value="fantasy" {{ isset($genres[2]) && $genres[2] == 'fantasy' ? 'selected' : '' }}>
+                            Fantasy</option>
                     </select>
                 </div>
+
             </div>
 
-            <button type="submit" class="submit-button">Tambah</button>
+            <button type="submit" class="submit-button">Simpan Perubahan</button>
+
         </form>
     </section>
+
+    <script>
+        function previewThumb(event) {
+            const reader = new FileReader();
+            reader.onload = function() {
+                document.getElementById('thumbPreview').src = reader.result;
+            }
+            reader.readAsDataURL(event.target.files[0]);
+        }
+    </script>
 @endsection
