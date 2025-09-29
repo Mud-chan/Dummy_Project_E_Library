@@ -281,4 +281,44 @@ class BukuController extends Controller
             return redirect()->back()->with('error', 'Gagal memperbarui buku: ' . $e->getMessage());
         }
     }
+
+    public function delete_buku($id_buku)
+    {
+        if (!Auth::check()) {
+            return redirect()->route('login')->with('error', 'Silakan login terlebih dahulu.');
+        }
+
+        if (Auth::user()->role !== 'petugas') {
+            abort(403, 'Anda tidak punya akses.');
+        }
+
+        try {
+            $buku = Buku::findOrFail($id_buku);
+
+            // Hapus file thumbnail kalau ada
+            if ($buku->thumb && file_exists(public_path('uploaded_files/' . $buku->thumb))) {
+                unlink(public_path('uploaded_files/' . $buku->thumb));
+            }
+
+            // Hapus relasi terkait
+            Peminjaman::where('id_buku', $id_buku)->delete();
+            Genre::where('id_buku', $id_buku)->delete();
+            Bookmark::where('id_buku', $id_buku)->delete();
+            Rating::where('id_buku', $id_buku)->delete();
+
+            // Hapus buku
+            $buku->delete();
+
+            Log::info('Delete Buku: Buku berhasil dihapus', ['id_buku' => $id_buku]);
+
+            return redirect()->route('koleksi.petugas')->with('success', 'Buku berhasil dihapus.');
+        } catch (\Exception $e) {
+            Log::error('Delete Buku: Gagal menghapus buku', [
+                'id_buku' => $id_buku,
+                'error'   => $e->getMessage(),
+                'trace'   => $e->getTraceAsString(),
+            ]);
+            return redirect()->back()->with('error', 'Gagal menghapus buku: ' . $e->getMessage());
+        }
+    }
 }

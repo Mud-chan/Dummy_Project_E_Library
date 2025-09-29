@@ -37,5 +37,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/upload-buku', [BukuController::class, 'upload_buku'])->name('upload.buku');
     Route::get('/buku/{id_buku}/edit', [BukuController::class, 'show_edit_buku'])->name('edit.buku');
     Route::put('/update-buku/{id_buku}', [BukuController::class, 'update_buku'])->name('update.buku');
+    Route::delete('/hapus-buku/{id_buku}', [BukuController::class, 'delete_buku'])->name('hapus.buku');
+
 });
 

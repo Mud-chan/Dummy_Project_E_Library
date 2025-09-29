@@ -51,15 +51,28 @@
 
                         <div class="book-tags">
                             <a href="{{ route('edit.buku', $book->id_buku) }}" style="text-decoration: none;">
-                            <div class="tag">
-                                <img src="../assets/images/edit-fill-1480.svg" alt="Action tag" />
-                                <span>Edit</span>
-                            </div>
+                                <div class="tag">
+                                    <img src="../assets/images/edit-fill-1480.svg" alt="Action tag" />
+                                    <span>Edit</span>
+                                </div>
                             </a>
+
+
                             <div class="tag">
-                                <img src="../assets/images/trash-bin-trash.svg" alt="Historical tag" />
-                                <span>Hapus</span>
+                                <form id="form-hapus-{{ $book->id_buku }}"
+                                    action="{{ route('hapus.buku', $book->id_buku) }}" method="POST">
+                                    @csrf
+                                    @method('DELETE')
+                                    <img src="../assets/images/trash-bin-trash.svg" alt="Delete icon" />
+                                    <span
+                                        onclick="if(confirm('Yakin mau hapus buku ini?')) document.getElementById('form-hapus-{{ $book->id_buku }}').submit()"
+                                        style="cursor:pointer; color:red;">
+                                        Hapus
+                                    </span>
+                                </form>
                             </div>
+
+
                         </div>
                     </div>
                 </div>

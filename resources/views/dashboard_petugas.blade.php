@@ -70,9 +70,19 @@
                                 </div>
                             </a>
                             <div class="tag">
-                                <img src="../assets/images/trash-bin-trash.svg" alt="Historical tag" />
-                                <span>Hapus</span>
+                                <form id="form-hapus-{{ $book->id_buku }}"
+                                    action="{{ route('hapus.buku', $book->id_buku) }}" method="POST">
+                                    @csrf
+                                    @method('DELETE')
+                                    <img src="../assets/images/trash-bin-trash.svg" alt="Delete icon" />
+                                    <span
+                                        onclick="if(confirm('Yakin mau hapus buku ini?')) document.getElementById('form-hapus-{{ $book->id_buku }}').submit()"
+                                        style="cursor:pointer; color:red;">
+                                        Hapus
+                                    </span>
+                                </form>
                             </div>
+
                         </div>
                     </div>
                 </div>
