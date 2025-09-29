@@ -7,6 +7,9 @@ use App\Http\Controllers\AuthController;
 Route::get('/', function () {
     return view('index');
 });
+Route::get('/koleksi', function () {
+    return view('koleksi');
+});
 
 // Register & Login
 Route::get('/register', fn() => view('auth.register'))->name('register');
