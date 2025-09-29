@@ -8,18 +8,17 @@ use Illuminate\Database\Eloquent\Model;
 class Buku extends Model
 {
     protected $table = 'buku';
-    protected $primaryKey = 'id';
+    protected $primaryKey = 'id_buku';
     public $incrementing = false;
     public $timestamps = false;
 
     protected $fillable = [
-        'id',
+        'id_buku',
         'id_petugas',
         'judul',
         'penulis',
         'deskripsi',
         'thumb',
-        'pdf',
         'kategori',
         'date_created'
     ];
@@ -36,11 +35,15 @@ class Buku extends Model
 
     public function rating()
     {
-    return $this->hasMany(Rating::class, 'id_buku');
+        return $this->hasMany(Rating::class, 'id_buku');
     }
 
     public function getAverageRatingAttribute()
     {
-    return $this->rating()->average('rating') ?? 0;
+        return $this->rating()->average('rating') ?? 0;
+    }
+    public function genre()
+    {
+        return $this->hasMany(Genre::class, 'id_buku');
     }
 }

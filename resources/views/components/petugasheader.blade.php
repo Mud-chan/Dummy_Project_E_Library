@@ -17,7 +17,7 @@
         <div class="content-wrapper">
             <!-- Left Sidebar -->
             <aside class="sidebar">
-                <img src="../assets/images/img_sidebar_logo.png" alt="E-Library Logo" class="sidebar-logo" />
+                <a href="{{ route('dashboard.petugas') }}" style="text-decoration: none;"><img src="../assets/images/img_sidebar_logo.png" alt="E-Library Logo" class="sidebar-logo" /></a>
 
                 <div class="sidebar-section">
                     <h3>Kategori</h3>
@@ -96,10 +96,12 @@
             <!-- Right Sidebar -->
             <aside class="right-sidebar">
                 <div class="sidebar-section">
-                    <button class="collection-btn">
-                        <img src="../assets/images/archives-document.svg" alt="Collection icon" />
-                        Colection
-                    </button>
+                    <a href="{{ route('koleksi.petugas') }}" style="text-decoration: none;">
+                    <div class="sidebar-item" >
+                        <img src="../assets/images/archives-document.svg" alt="Statistics icon" />
+                        <span>Colection</span>
+                    </div>
+                    </a>
 
                     <div class="sidebar-item">
                         <img src="../assets/images/basic-popular-statistic.svg" alt="Statistics icon" />

@@ -7,13 +7,7 @@ use App\Http\Controllers\AuthController;
 Route::get('/', function () {
     return view('index');
 });
-Route::get('/koleksi', function () {
-    return view('koleksi_petugas');
-});
 
-Route::get('/tambah', function () {
-    return view('tambah_buku');
-});
 
 // Register & Login
 Route::get('/register', fn() => view('auth.register'))->name('register');
@@ -22,10 +16,10 @@ Route::post('/register', [AuthController::class, 'register'])->name('register.st
 Route::get('/login', fn() => view('auth.login'))->name('login');
 Route::post('/login', [AuthController::class, 'login'])->name('login.store');
 
-// Dashboard umum (role dicek di controller)
-Route::get('/petugas/dashboard', [AuthController::class, 'dashboardPetugas'])
-    ->name('dashboard.petugas')
-    ->middleware('auth');
+// // Dashboard umum (role dicek di controller)
+// Route::get('/petugas/dashboard', [AuthController::class, 'dashboardPetugas'])
+//     ->name('dashboard.petugas')
+//     ->middleware('auth');
 
 Route::get('/pengunjung/dashboard', [AuthController::class, 'dashboardPengunjung'])
     ->name('dashboard.pengunjung')
@@ -33,3 +27,13 @@ Route::get('/pengunjung/dashboard', [AuthController::class, 'dashboardPengunjung
 
 // Logout
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
+use App\Http\Controllers\BukuController;
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/dashboard-petugas', [BukuController::class, 'index'])->name('dashboard.petugas');
+    Route::get('/koleksi-petugas', [BukuController::class, 'koleksi'])->name('koleksi.petugas');
+    Route::get('/tambah-buku', [BukuController::class, 'show_tambah_buku'])->name('tambah.buku');
+    Route::post('/upload-buku', [BukuController::class, 'upload_buku'])->name('upload.buku');
+});
+
