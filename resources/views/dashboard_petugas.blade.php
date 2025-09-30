@@ -99,6 +99,8 @@
     </section>
 
     <section class="trending-section">
-        <button class="view-more-btn">View More</button>
+        <button class="view-more-btn" onclick="window.location='{{ route('koleksi.petugas') }}'">
+        View More
+    </button>
     </section>
 @endsection

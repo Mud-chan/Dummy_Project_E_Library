@@ -2,35 +2,17 @@
 @section('main')
     <link rel="stylesheet" href="{{ asset('assets/css/koleksi.css') }}">
 
-    <!-- Popular Books Section -->
-    <section>
-        <div class="section-header">
-            <h2>Buku Populer</h2>
-            <span class="see-more">Lainnya</span>
-        </div>
-
-        <div class="books-grid">
-            @foreach ($popularBooks as $buku)
-                <div class="book-card">
-                    <a href="{{ route('buku.detail.pengunjung', $buku->id_buku) }}">
-                        <img src="{{ asset('uploaded_files/' . $buku->thumb) }}" alt="Cover {{ $buku->judul }}"
-                            class="book-cover" />
-                    </a>
-                    <div class="book-title">{{ \Illuminate\Support\Str::limit($buku->judul, 20, '...') }}</div>
-                </div>
-            @endforeach
-        </div>
-    </section>
-
-    <div class="section-header">
-        <h2>Buku Terbaru</h2>
+    <!-- Content Header -->
+    <div class="content-header">
+        <h1>{{ $title }}</h1>
     </div>
 
+    <!-- Book Collection -->
     <section class="book-collection">
-        @foreach ($contents as $book)
+        @forelse ($contents as $book)
             <article class="book-item">
                 <div class="book-content">
-                    <a href="{{ route('buku.detail.pengunjung', $book->id_buku) }}">
+                    <a href="{{ route('buku.detail', $book->id_buku) }}">
                         <img src="{{ asset('uploaded_files/' . $book->thumb) }}" alt="Cover {{ $book->judul }}"
                             class="book-image" />
                     </a>
@@ -39,7 +21,9 @@
                         <div class="book-header">
                             <div>
                                 <div class="book-author">{{ $book->penulis }}</div>
-                                <h2 class="book-judul">{{ \Illuminate\Support\Str::limit($book->judul, 20, '...') }}</h2>
+                                <h2 class="book-judul">
+                                    {{ \Illuminate\Support\Str::limit($book->judul, 20, '...') }}
+                                </h2>
                             </div>
                             <div class="book-stats">
                                 <div class="stat-item">
@@ -57,10 +41,9 @@
                             {{ \Illuminate\Support\Str::limit($book->deskripsi, 100, '...') }}
                         </p>
 
-                        {{-- Tags Genre --}}
                         <div class="book-tags">
                             @foreach ($book->genres as $tag)
-                                <a href="{{ route('cari.buku.pengunjung', ['genre' => $tag->tag, 'kategori' => request('kategori')]) }}"
+                                <a href="{{ route('cari.buku', ['genre' => $tag->tag, 'kategori' => request('kategori')]) }}"
                                     class="tag" style="text-decoration:none;">
                                     <img src="{{ asset('assets/images/img_image_1.png') }}"
                                         alt="{{ $tag->tag }} tag" />
@@ -72,12 +55,15 @@
                     </div>
                 </div>
             </article>
-        @endforeach
+        @empty
+            <p style="text-align:center; margin-top:20px;">Belum ada buku yang tersedia.</p>
+        @endforelse
     </section>
 
-    <section class="trending-section">
-        <button class="view-more-btn" onclick="window.location='{{ route('koleksi.pengunjung') }}'">
-            View More
-        </button>
-    </section>
+    <!-- Pagination -->
+    <div class="pagination-container">
+        {{ $contents->onEachSide(1)->links('pagination::simple-bootstrap-5') }}
+    </div>
+
+
 @endsection

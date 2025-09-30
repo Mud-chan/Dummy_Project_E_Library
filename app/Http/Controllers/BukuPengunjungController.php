@@ -70,7 +70,7 @@ class BukuPengunjungController extends Controller
             ->take(10)
             ->values();
 
-        return view('koleksi_petugas', [
+        return view('koleksi_pengunjung', [
             "title"    => "Buku",
             "contents" => $contents,
             "genreList"    => $genreList,

@@ -67,10 +67,10 @@
                     </div>
 
                     <nav class="header-nav">
-                        <a href="{{ route('profile.show') }}" class="nav-item">
+                        <a href="{{ route('profile.show.pengunjung') }}" class="nav-item">
                             {{ Auth::user()->name }} ({{ Auth::user()->role }})
                         </a>
-                        <a href="{{ route('profile.show') }}">
+                        <a href="{{ route('profile.show.pengunjung') }}">
                             <img src="{{ Auth::user()->image ? asset('uploaded_profiles/' . Auth::user()->image) : asset('assets/images/no-cover.png') }}"
                                 alt="User avatar" class="user-avatar" />
                         </a>
@@ -85,8 +85,8 @@
             <!-- Right Sidebar -->
             <aside class="right-sidebar">
                 <div class="sidebar-section">
-                    <a href="{{ route('koleksi.petugas') }}">
-                        <div class="sidebar-item {{ request()->routeIs('koleksi.petugas') ? 'active-item' : '' }}">
+                    <a href="{{ route('koleksi.pengunjung') }}">
+                        <div class="sidebar-item {{ request()->routeIs('koleksi.pengunjung') ? 'active-item' : '' }}">
                             <img src="{{ asset('assets/images/archives-document.svg') }}" alt="Collection icon" />
                             <span>Colection</span>
                         </div>
