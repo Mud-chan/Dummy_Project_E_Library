@@ -1,15 +1,15 @@
-<html lang="en">
+<html lang="es">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>HandleIt - Discover Popular Books & Trending Titles | Book Platform</title>
-  <meta name="description" content="Explore popular books, trending titles, and discover new reads on HandleIt. Browse by categories like Novel, Manga, Manhwa and genres including Action, Adventure, Horror, Mystery, Fantasy." />
-  <meta name="keywords" content="books, reading, novels, manga, manhwa, book discovery, popular books, trending books, book platform" />
+  <title>Judul Judul - Penulis | Detalles del Libro | HandleIt</title>
+  <meta name="description" content="Descubre 'Judul Judul' de Penulis en HandleIt. Lee la sinopsis completa, consulta el historial de préstamos y encuentra libros similares en nuestra biblioteca digital." />
+  <meta name="keywords" content="Judul Judul, Penulis, libro, biblioteca digital, HandleIt, préstamo libros, acción, histórico" />
 
   <!-- Open Graph / Facebook -->
   <meta property="og:type" content="website" />
-  <meta property="og:title" content="HandleIt - Discover Popular Books & Trending Titles" />
-  <meta property="og:description" content="Explore popular books, trending titles, and discover new reads on HandleIt. Browse by categories and genres for the perfect book." />
+  <meta property="og:title" content="Judul Judul - Penulis | Detalles del Libro | HandleIt" />
+  <meta property="og:description" content="Descubre 'Judul Judul' de Penulis en HandleIt. Lee la sinopsis completa, consulta el historial de préstamos y encuentra libros similares." />
 
   <style>
     /* Reset and base styles */
@@ -32,75 +32,124 @@
       justify-content: center;
       align-items: center;
       width: 100%;
-      box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.25);
       min-height: 100vh;
     }
 
     .content-wrapper {
       display: flex;
       flex-direction: column;
-      justify-content: center;
-      align-items: flex-start;
+      gap: 46px;
+      justify-content: flex-start;
+      align-items: center;
       width: 90%;
-      margin-top: 40px;
-      margin-bottom: 10px;
+      max-width: 1308px;
+      margin: 40px auto 44px;
+      padding: 0 16px;
     }
 
-    .layout-container {
+    /* Header */
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      margin-bottom: 20px;
+    }
+
+    .logo {
+      width: 94px;
+      height: 36px;
+    }
+
+    .header-center {
+      display: none;
+    }
+
+    .search-container {
+      position: relative;
+      width: 100%;
+      max-width: 400px;
+    }
+
+    .search-input {
+      width: 100%;
+      padding: 4px 62px 4px 22px;
+      border: 2px solid #dddddd;
+      border-radius: 24px;
+      font-size: 16px;
+      font-family: 'Overpass', sans-serif;
+      font-weight: 300;
+      line-height: 28px;
+      outline: none;
+    }
+
+    .search-icon {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 40px;
+      height: 40px;
+      cursor: pointer;
+    }
+
+    .header-right {
+      display: none;
+    }
+
+    .user-section {
+      display: flex;
+      gap: 28px;
+      align-items: center;
+    }
+
+    .user-name {
+      font-size: 18px;
+      font-weight: 400;
+      line-height: 28px;
+      margin-bottom: 8px;
+    }
+
+    .user-avatar {
+      width: 50px;
+      height: 50px;
+      border-radius: 24px;
+    }
+
+    /* Main content layout */
+    .main-content {
       display: flex;
       flex-direction: column;
       justify-content: flex-start;
       align-items: flex-start;
       width: 100%;
-      gap: 24px;
+      gap: 30px;
     }
 
     /* Sidebar */
     .sidebar {
       display: none;
       flex-direction: column;
-      justify-content: flex-start;
-      width: 248px;
-      margin-top: 6px;
+      gap: 14px;
+      width: 24%;
     }
 
-    .sidebar-logo {
-      width: 94px;
-      height: 36px;
-    }
-
-    .category-title {
+    .sidebar-title {
       font-size: 18px;
-      font-family: Overpass;
+      font-family: 'Overpass', sans-serif;
       font-weight: 600;
-      line-height: 23px;
-      text-align: left;
+      line-height: 28px;
       color: #9b9b9b;
-      margin-top: 68px;
-    }
-
-    .sidebar-menu {
-      margin-top: 20px;
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-    }
-
-    .menu-section {
-      display: flex;
-      flex-direction: column;
-      gap: 0;
+      margin-bottom: 14px;
     }
 
     .menu-item {
       display: flex;
-      flex-direction: row;
-      justify-content: flex-start;
       align-items: center;
       gap: 18px;
-      padding: 10px 10px 10px 0;
+      padding: 6px;
       cursor: pointer;
-      transition: all 0.3s ease;
+      transition: background-color 0.3s ease;
     }
 
     .menu-item:hover {
@@ -110,112 +159,473 @@
 
     .menu-icon {
       width: 18px;
-      height: 16px;
+      height: 18px;
     }
 
     .menu-text {
       font-size: 18px;
-      font-family: Overpass;
       font-weight: 400;
-      line-height: 23px;
-      text-align: left;
+      line-height: 28px;
       color: #000000;
     }
 
-    .genre-title {
-      font-size: 18px;
-      font-family: Overpass;
-      font-weight: 600;
+    /* Book detail section */
+    .book-detail-section {
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+      width: 100%;
+    }
+
+    .book-hero {
+      position: relative;
+      width: 100%;
+      background-color: rgba(246, 231, 174, 0.4);
+      border-radius: 20px;
+      padding: 28px 20px;
+      min-height: 200px;
+    }
+
+    .book-cover {
+      width: 120px;
+      height: 180px;
+      border-radius: 20px;
+      margin: 0 auto 20px;
+      display: block;
+    }
+
+    .book-info {
+      text-align: center;
+    }
+
+    .book-author {
+      font-size: 16px;
+      font-weight: 400;
       line-height: 23px;
-      text-align: left;
-      color: #9b9b9b;
-      margin-top: 14px;
+      color: #000000;
       margin-bottom: 8px;
     }
 
-    .dropdown-arrow {
-      width: 14px;
-      height: 6px;
+    .book-title {
+      font-size: 28px;
+      font-weight: 600;
+      line-height: 36px;
+      color: #000000;
+      margin-bottom: 20px;
     }
 
-    /* Header */
-    .header {
+    .book-tags {
       display: flex;
-      justify-content: space-between;
-      align-items: center;
-      width: 100%;
-      margin-bottom: 24px;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+      margin-bottom: 20px;
     }
 
-    .search-container {
+    .tag-button {
       display: flex;
       align-items: center;
-      width: 100%;
-      max-width: 400px;
-      position: relative;
-    }
-
-    .search-input {
-      width: 100%;
-      padding: 4px 62px 4px 22px;
-      border: 2px solid #dddddd;
-      border-radius: 24px;
+      gap: 8px;
+      padding: 6px 22px 6px 16px;
+      background-color: #f6e7ae;
+      border: none;
+      border-radius: 10px;
       font-size: 16px;
-      font-family: Overpass;
-      font-weight: 300;
-      line-height: 28px;
-      outline: none;
-      transition: border-color 0.3s ease;
-    }
-
-    .search-input:focus {
-      border-color: #4F46E5;
-    }
-
-    .search-icon {
-      position: absolute;
-      right: 12px;
-      width: 40px;
-      height: 40px;
+      font-weight: 400;
+      line-height: 27px;
+      color: #000000;
       cursor: pointer;
+      transition: background-color 0.3s ease;
     }
 
-    .header-nav {
-      display: none;
-      flex-direction: row;
-      gap: 28px;
-      align-items: center;
+    .tag-button:hover {
+      background-color: #f0d97a;
     }
 
-    .nav-menu {
+    .tag-icon {
+      width: 18px;
+      height: 18px;
+    }
+
+    .book-stats {
       display: flex;
-      flex-direction: row;
-      gap: 44px;
+      justify-content: center;
       align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-top: 20px;
     }
 
-    .nav-item {
-      font-size: 18px;
-      font-family: Overpass;
+    .stat-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .stat-icon {
+      width: 14px;
+      height: 14px;
+    }
+
+    .stat-text {
+      font-size: 16px;
       font-weight: 400;
       line-height: 28px;
       color: #000000;
+    }
+
+    .heart-icon {
+      position: absolute;
+      top: 28px;
+      right: 30px;
+      width: 24px;
+      height: 22px;
+      cursor: pointer;
+    }
+
+    /* Synopsis section */
+    .synopsis-section {
+      margin-top: 30px;
+    }
+
+    .synopsis-title {
+      font-size: 20px;
+      font-weight: 600;
+      line-height: 31px;
+      color: #000000;
+      margin-bottom: 14px;
+    }
+
+    .synopsis-text {
+      font-size: 16px;
+      font-weight: 300;
+      line-height: 22px;
+      text-align: justify;
+      color: #000000;
+    }
+
+    /* Borrowing table */
+    .borrowing-section {
+      background-color: rgba(246, 231, 174, 0.4);
+      border-radius: 20px;
+      padding: 22px;
+      margin-top: 30px;
+    }
+
+    .borrowing-title {
+      font-size: 20px;
+      font-weight: 600;
+      line-height: 31px;
+      color: #000000;
+      text-align: center;
+      margin-bottom: 16px;
+    }
+
+    .borrowing-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 16px;
+    }
+
+    .table-header {
+      border-bottom: 1px solid #000000;
+    }
+
+    .table-header th {
+      font-size: 14px;
+      font-weight: 600;
+      line-height: 21px;
+      color: #000000;
+      padding: 8px;
+      text-align: left;
+    }
+
+    .table-row td {
+      font-size: 14px;
+      font-weight: 600;
+      line-height: 21px;
+      color: #000000;
+      padding: 12px 8px;
+      border-bottom: 1px solid #ddd;
+    }
+
+    /* Recommendations sidebar */
+    .recommendations-sidebar {
+      display: flex;
+      flex-direction: column;
+      gap: 42px;
+      width: 100%;
+      margin-top: 30px;
+    }
+
+    .recommendation-section {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+
+    .section-title {
+      font-size: 20px;
+      font-weight: 600;
+      line-height: 37px;
+      color: #000000;
+    }
+
+    .view-all {
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 28px;
+      color: #9b9b9b;
       text-decoration: none;
       cursor: pointer;
-      transition: color 0.3s ease;
     }
 
-    .nav-item:hover {
-      color: #4F46E5;
+    .book-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
     }
 
-    .profile-image {
+    .book-item {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+      background-color: rgba(246, 231, 174, 0.4);
+      border-radius: 10px;
+      padding: 8px;
+    }
+
+    .book-thumbnail {
       width: 50px;
-      height: 50px;
-      border-radius: 24px;
+      height: 54px;
+      border-radius: 8px;
+      flex-shrink: 0;
     }
 
-    .hamburger {
+    .book-details {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .book-author-small {
+      font-size: 10px;
+      font-weight: 300;
+      line-height: 16px;
+      color: #000000;
+    }
+
+    .book-title-small {
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 21px;
+      color: #000000;
+    }
+
+    .progress-container {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 4px;
+    }
+
+    .progress-bar {
+      flex: 1;
+      height: 5px;
+      background-color: #dddddd;
+      border-radius: 2px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background-color: #2c9585;
+      border-radius: 2px;
+    }
+
+    .progress-text {
+      font-size: 12px;
+      font-weight: 300;
+      line-height: 19px;
+      color: #000000;
+      white-space: nowrap;
+    }
+
+    /* Interactive states */
+    .menu-item:hover,
+    .book-item:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .tag-button:active {
+      transform: scale(0.95);
+    }
+
+    /* Responsive media queries */
+    @media (min-width: 640px) {
+      .content-wrapper {
+        padding: 0 24px;
+      }
+
+      .header-center {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 80%;
+      }
+
+      .search-container {
+        width: 52%;
+      }
+
+      .search-input {
+        font-size: 18px;
+      }
+
+      .book-cover {
+        width: 140px;
+        height: 200px;
+      }
+
+      .book-title {
+        font-size: 32px;
+        line-height: 42px;
+      }
+
+      .tag-button {
+        font-size: 18px;
+        padding: 6px 22px 6px 48px;
+      }
+
+      .synopsis-title {
+        font-size: 24px;
+      }
+
+      .synopsis-text {
+        font-size: 18px;
+      }
+
+      .borrowing-title {
+        font-size: 24px;
+      }
+
+      .table-header th,
+      .table-row td {
+        font-size: 16px;
+      }
+
+      .section-title {
+        font-size: 24px;
+      }
+
+      .view-all {
+        font-size: 18px;
+      }
+    }
+
+    @media (min-width: 768px) {
+      .main-content {
+        flex-direction: row;
+        align-items: flex-start;
+        gap: 30px;
+      }
+
+      .sidebar {
+        display: flex;
+      }
+
+      .book-detail-section {
+        width: 70%;
+      }
+
+      .book-hero {
+        display: flex;
+        align-items: flex-end;
+        padding: 28px 30px;
+        min-height: 274px;
+      }
+
+      .book-cover {
+        width: 168px;
+        height: 250px;
+        margin: 0 32px 0 0;
+        display: block;
+      }
+
+      .book-info {
+        flex: 1;
+        text-align: left;
+      }
+
+      .book-author {
+        font-size: 18px;
+      }
+
+      .book-title {
+        font-size: 36px;
+        line-height: 46px;
+      }
+
+      .book-tags {
+        justify-content: flex-start;
+      }
+
+      .book-stats {
+        justify-content: flex-end;
+        position: absolute;
+        bottom: 32px;
+        right: 30px;
+      }
+
+      .stat-text {
+        font-size: 18px;
+      }
+
+      .recommendations-sidebar {
+        width: 20%;
+        margin-top: 0;
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .content-wrapper {
+        padding: 0 32px;
+      }
+
+      .header-right {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 24%;
+      }
+
+      .main-content {
+        gap: 46px;
+      }
+
+      .book-detail-section {
+        gap: 34px;
+      }
+    }
+
+    @media (min-width: 1280px) {
+      .content-wrapper {
+        width: 90%;
+        max-width: 1308px;
+      }
+    }
+
+    /* Mobile menu toggle */
+    .mobile-menu-toggle {
       display: block;
       background: none;
       border: none;
@@ -224,718 +634,336 @@
       padding: 8px;
     }
 
-    /* Main content */
-    .main-content {
-      display: flex;
-      flex-direction: column;
-      width: 100%;
-      gap: 42px;
-    }
-
-    .section-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      width: 100%;
-      margin-bottom: 8px;
-    }
-
-    .section-title {
-      font-size: 20px;
-      font-family: Overpass;
-      font-weight: 600;
-      line-height: 31px;
-      color: #000000;
-    }
-
-    .see-more {
-      font-size: 16px;
-      font-family: Overpass;
-      font-weight: 400;
-      line-height: 28px;
-      color: #9b9b9b;
-      cursor: pointer;
-      transition: color 0.3s ease;
-    }
-
-    .see-more:hover {
-      color: #4F46E5;
-    }
-
-    .books-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 16px;
-      width: 100%;
-    }
-
-    .book-cover {
-      width: 100%;
-      height: auto;
-      border-radius: 20px;
-      transition: transform 0.3s ease;
-      cursor: pointer;
-    }
-
-    .book-cover:hover {
-      transform: scale(1.05);
-    }
-
-    /* Trending section */
-    .trending-section {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      width: 100%;
-    }
-
-    .trending-title {
-      font-size: 20px;
-      font-family: Overpass;
-      font-weight: 600;
-      line-height: 37px;
-      color: #000000;
-      align-self: flex-start;
-    }
-
-    .trending-list {
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-      width: 100%;
-    }
-
-    .trending-item {
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-      padding: 20px;
-      background-color: rgba(246, 231, 174, 0.4);
-      border-radius: 20px;
-    }
-
-    .trending-content {
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-    }
-
-    .trending-image {
-      width: 100px;
-      height: 150px;
-      border-radius: 20px;
-      align-self: center;
-    }
-
-    .book-info {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-
-    .book-header {
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-    }
-
-    .book-stats {
-      display: flex;
-      flex-direction: row;
-      gap: 20px;
-      align-items: center;
-      margin-top: 8px;
-    }
-
-    .stat-item {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .stat-icon {
-      width: 14px;
-      height: 12px;
-    }
-
-    .author-name {
-      font-size: 16px;
-      font-family: Overpass;
-      font-weight: 400;
-      line-height: 28px;
-      color: #000000;
-    }
-
-    .book-title {
-      font-size: 16px;
-      font-family: Overpass;
-      font-weight: 600;
-      line-height: 28px;
-      color: #000000;
-    }
-
-    .book-description {
-      font-size: 14px;
-      font-family: Overpass;
-      font-weight: 300;
-      line-height: 21px;
-      text-align: justify;
-      color: #000000;
-      margin-top: 12px;
-    }
-
-    .book-tags {
-      display: flex;
-      flex-direction: row;
-      gap: 8px;
-      margin-top: 4px;
-    }
-
-    .book-tag {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      padding: 4px 8px;
-      background-color: #f6e7ae;
-      border-radius: 5px;
-    }
-
-    .tag-icon {
-      width: 14px;
-      height: 14px;
-    }
-
-    .tag-text {
-      font-size: 14px;
-      font-family: Overpass;
-      font-weight: 300;
-      line-height: 22px;
-      color: #000000;
-    }
-
-    .view-more-btn {
-      font-size: 20px;
-      font-family: Overpass;
-      font-weight: 400;
-      line-height: 31px;
-      color: #000000;
-      background-color: #f6e7ae;
-      border: none;
-      border-radius: 10px;
-      padding: 10px 34px;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      align-self: center;
-      margin-top: 12px;
-    }
-
-    .view-more-btn:hover {
-      background-color: #f0d96b;
-      transform: translateY(-2px);
-    }
-
-    /* Right sidebar */
-    .right-sidebar {
-      display: none;
-      flex-direction: column;
-      gap: 22px;
-      width: 24%;
-      margin-top: 32px;
-    }
-
-    .sidebar-section {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .collection-input {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      width: 100%;
-      padding: 16px 12px 16px 44px;
-      background-color: #f6e7ae;
-      border: none;
-      border-radius: 10px;
-      font-size: 18px;
-      font-family: Overpass;
-      font-weight: 400;
-      line-height: 23px;
-      color: #000000;
-      position: relative;
-    }
-
-    .input-icon {
-      position: absolute;
-      left: 16px;
-      width: 10px;
-      height: 10px;
-    }
-
-    .sidebar-item {
-      display: flex;
-      align-items: flex-start;
-      gap: 12px;
-      padding: 12px 20px;
-      background-color: rgba(246, 231, 174, 0.4);
-      border-radius: 10px;
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
-
-    .sidebar-item:hover {
-      background-color: rgba(246, 231, 174, 0.6);
-    }
-
-    .sidebar-item.active {
-      background-color: #f6e7ae;
-    }
-
-    .sidebar-icon {
-      width: 14px;
-      height: 12px;
-      align-self: center;
-    }
-
-    .sidebar-text {
-      font-size: 18px;
-      font-family: Overpass;
-      font-weight: 400;
-      line-height: 23px;
-      color: #7d7d7d;
-      margin-bottom: 6px;
-    }
-
-    .sidebar-item.active .sidebar-text {
-      color: #000000;
-    }
-
-    .filter-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      width: 100%;
-    }
-
-    .filter-title {
-      font-size: 24px;
-      font-family: Overpass;
-      font-weight: 600;
-      line-height: 31px;
-      color: #000000;
-    }
-
-    .filter-see-all {
-      font-size: 18px;
-      font-family: Overpass;
-      font-weight: 400;
-      line-height: 23px;
-      color: #9b9b9b;
-      cursor: pointer;
-    }
-
-    .filter-list {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    /* Typography */
-    h1 {
-      font-size: 24px;
-      font-family: Overpass;
-      font-weight: 600;
-      line-height: 31px;
-      color: #000000;
-    }
-
-    /* Interactive states */
-    button:focus, input:focus {
-      outline: 2px solid #4F46E5;
-      outline-offset: 2px;
-    }
-
-    button:active {
-      transform: scale(0.95);
-    }
-
-    /* Responsive media queries */
-    @media (min-width: 640px) {
-      .books-grid {
-        grid-template-columns: repeat(3, 1fr);
-        gap: 20px;
-      }
-
-      .trending-item {
-        flex-direction: row;
-        gap: 28px;
-      }
-
-      .trending-image {
-        width: 134px;
-        height: 200px;
-        align-self: flex-start;
-      }
-
-      .section-title {
-        font-size: 24px;
-      }
-
-      .trending-title {
-        font-size: 24px;
-      }
-
-      .search-container {
-        max-width: 500px;
-      }
-    }
-
     @media (min-width: 768px) {
-      .layout-container {
-        flex-direction: row;
-        gap: 44px;
-      }
-
-      .main-content {
-        width: 70%;
-      }
-
-      .books-grid {
-        grid-template-columns: repeat(4, 1fr);
-        gap: 24px;
-      }
-
-      .hamburger {
+      .mobile-menu-toggle {
         display: none;
       }
-
-      .header-nav {
-        display: flex;
-      }
-
-      .book-stats {
-        flex-direction: row;
-        justify-content: flex-end;
-        gap: 30px;
-      }
-
-      .author-name {
-        font-size: 18px;
-      }
-
-      .book-title {
-        font-size: 18px;
-      }
     }
 
-    @media (min-width: 1024px) {
-      .sidebar {
-        display: flex;
-      }
-
-      .right-sidebar {
-        display: flex;
-      }
-
-      .content-wrapper {
-        width: 90%;
-        max-width: 1310px;
-        margin: 0 auto;
-        padding: 40px 32px 10px;
-      }
-
-      .main-content {
-        width: 58%;
-      }
-
-      .search-container {
-        width: 52%;
-      }
-    }
-
-    @media (min-width: 1280px) {
-      .content-wrapper {
-        padding: 40px 24px 10px;
+    /* Hidden elements for mobile */
+    @media (max-width: 767px) {
+      .header-center,
+      .header-right {
+        display: none;
       }
     }
   </style>
-<script type="module" src="https://static.rocket.new/rocket-web.js?_cfg=https%3A%2F%2Fakanemasay9577back.builtwithrocket.new&_be=https%3A%2F%2Fapplication.rocket.new&_v=0.1.8"></script>
+<script type="module" src="https://static.rocket.new/rocket-web.js?_cfg=https%3A%2F%2Fakanemasay1797back.builtwithrocket.new&_be=https%3A%2F%2Fapplication.rocket.new&_v=0.1.8"></script>
 </head>
 <body>
-  <div class="main-container">
+  <main class="main-container">
     <div class="content-wrapper">
-      <div class="layout-container">
+      <!-- Header -->
+      <header class="header">
+        <img src="../assets/images/img_header_logo.png" alt="HandleIt Logo" class="logo" />
+
+        <div class="header-center">
+          <div class="search-container">
+            <input type="search" class="search-input" placeholder="Empieza tu búsqueda" aria-label="Buscar libros" />
+            <img src="../assets/images/img_searchicon.svg" alt="Buscar" class="search-icon" />
+          </div>
+          <div class="header-right">
+            <span class="menu-text">Explorar</span>
+            <div class="user-section">
+              <span class="user-name">James F.</span>
+              <img src="../assets/images/img_unnamed_1.png" alt="Avatar de James F." class="user-avatar" />
+            </div>
+          </div>
+        </div>
+
+        <button class="mobile-menu-toggle" aria-label="Abrir menú">☰</button>
+      </header>
+
+      <!-- Main Content -->
+      <div class="main-content">
         <!-- Sidebar -->
         <aside class="sidebar">
-          <img src="../assets/images/img_sidebar_logo.png" alt="HandleIt Logo" class="sidebar-logo" />
+          <div>
+            <h2 class="sidebar-title">Categorías</h2>
+            <nav role="navigation">
+              <div class="menu-item">
+                <img src="../assets/images/img_vector.svg" alt class="menu-icon" />
+                <span class="menu-text">Novedades</span>
+              </div>
+              <div class="menu-item">
+                <img src="../assets/images/img_vector_teal_400.svg" alt class="menu-icon" />
+                <span class="menu-text">Mejor valorados</span>
+              </div>
+              <div class="menu-item">
+                <img src="../assets/images/img_vector_teal_400_18x18.svg" alt class="menu-icon" />
+                <span class="menu-text">Comentados</span>
+              </div>
+            </nav>
+          </div>
 
-          <h2 class="category-title">Kategori</h2>
-
-          <nav class="sidebar-menu">
-            <div class="menu-section">
+          <div>
+            <h2 class="sidebar-title">Géneros</h2>
+            <nav role="navigation">
               <div class="menu-item">
-                <img src="../assets/images/img_vector.svg" alt="Novel icon" class="menu-icon" />
-                <span class="menu-text">Novel</span>
+                <img src="../assets/images/img_image_1.png" alt class="menu-icon" />
+                <span class="menu-text">Acción</span>
               </div>
               <div class="menu-item">
-                <img src="../assets/images/img_vector_teal_400.svg" alt="Manga icon" class="menu-icon" />
-                <span class="menu-text">Manga</span>
+                <img src="../assets/images/img_image_2.png" alt class="menu-icon" />
+                <span class="menu-text">Aventura</span>
               </div>
               <div class="menu-item">
-                <img src="../assets/images/img_vector_teal_400_18x18.svg" alt="Manhwa icon" class="menu-icon" />
-                <span class="menu-text">Manhwa</span>
-              </div>
-            </div>
-
-            <div class="menu-section">
-              <h3 class="genre-title">Genre</h3>
-              <div class="menu-item">
-                <img src="../assets/images/img_image_1.png" alt="Action icon" class="menu-icon" />
-                <span class="menu-text">Action</span>
+                <img src="../assets/images/img_image_3.png" alt class="menu-icon" />
+                <span class="menu-text">Clásico</span>
               </div>
               <div class="menu-item">
-                <img src="../assets/images/img_image_2.png" alt="Adventure icon" class="menu-icon" />
-                <span class="menu-text">Adventure</span>
+                <img src="../assets/images/img_image_4.png" alt class="menu-icon" />
+                <span class="menu-text">Misterio</span>
               </div>
               <div class="menu-item">
-                <img src="../assets/images/img_image_3.png" alt="Horror icon" class="menu-icon" />
-                <span class="menu-text">Horor</span>
+                <img src="../assets/images/img_image_5.png" alt class="menu-icon" />
+                <span class="menu-text">Fantasía</span>
               </div>
               <div class="menu-item">
-                <img src="../assets/images/img_image_4.png" alt="Mystery icon" class="menu-icon" />
-                <span class="menu-text">Misteri</span>
+                <img src="../assets/images/img_arrow_down.svg" alt class="menu-icon" />
+                <span class="menu-text">Todos los géneros</span>
               </div>
-              <div class="menu-item">
-                <img src="../assets/images/img_image_5.png" alt="Fantasy icon" class="menu-icon" />
-                <span class="menu-text">Fantasy</span>
-              </div>
-              <div class="menu-item">
-                <img src="../assets/images/img_arrow_down.svg" alt="Expand icon" class="dropdown-arrow" />
-                <span class="menu-text">Lainnya</span>
-              </div>
-            </div>
-          </nav>
+            </nav>
+          </div>
         </aside>
 
-        <!-- Main Content -->
-        <main class="main-content">
-          <!-- Header -->
-          <header class="header">
-            <button class="hamburger" aria-label="Toggle menu">☰</button>
-
-            <div class="search-container">
-              <input type="search" class="search-input" placeholder="Empieza tu búsqueda" aria-label="Search books" />
-              <img src="../assets/images/img_searchicon.svg" alt="Search" class="search-icon" />
-            </div>
-
-            <nav class="header-nav">
-              <div class="nav-menu">
-                <a href="#" class="nav-item">Explorar</a>
-                <a href="#" class="nav-item">James F.</a>
+        <!-- Book Detail Section -->
+        <section class="book-detail-section">
+          <!-- Book Hero -->
+          <div class="book-hero">
+            <img src="../assets/images/img_image_10.png" alt="Portada del libro Judul Judul" class="book-cover" />
+            <div class="book-info">
+              <p class="book-author">Penulis</p>
+              <h1 class="book-title">Judul Judul</h1>
+              <div class="book-tags">
+                <button class="tag-button">
+                  <img src="../assets/images/img_image_1.png" alt class="tag-icon" />
+                  Acción
+                </button>
+                <button class="tag-button">
+                  <img src="../assets/images/img_image_11.png" alt class="tag-icon" />
+                  Histórico
+                </button>
               </div>
-              <img src="../assets/images/img_unnamed_1.png" alt="User profile" class="profile-image" />
-            </nav>
-          </header>
+            </div>
+            <img src="../assets/images/img_vector_black_900.svg" alt="Agregar a favoritos" class="heart-icon" />
+            <div class="book-stats">
+              <div class="stat-item">
+                <img src="../assets/images/img_vector_black_900_12x14.svg" alt class="stat-icon" />
+                <span class="stat-text">363</span>
+              </div>
+              <div class="stat-item">
+                <img src="../assets/images/img_vector_black_900_12x18.svg" alt class="stat-icon" />
+                <span class="stat-text">1.7k</span>
+              </div>
+              <div class="stat-item">
+                <img src="../assets/images/img_vector_black_900_14x14.svg" alt class="stat-icon" />
+                <span class="stat-text">120</span>
+              </div>
+            </div>
+          </div>
 
-          <!-- Popular Books Section -->
-          <section>
+          <!-- Synopsis -->
+          <div class="synopsis-section">
+            <h2 class="synopsis-title">Sinopsis</h2>
+            <p class="synopsis-text">
+              La Peregrina es, sin duda, la perla sino más extraordinaria, más famosa de todos los
+              tiempos. Procedente de las aguas del mar Caribe, fue entregada a Felipe II y desde
+              entonces se convirtió en una de las joyas principales de la monarquía hispánica...
+            </p>
+          </div>
+
+          <!-- Borrowing Section -->
+          <div class="borrowing-section">
+            <h2 class="borrowing-title">Peminjam</h2>
+            <table class="borrowing-table">
+              <thead class="table-header">
+                <tr>
+                  <th>Nama</th>
+                  <th>Tanggal Pinjam</th>
+                  <th>Tanggal Pengambalian</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="table-row">
+                  <td>Zuki Oli Samping</td>
+                  <td>09/09/2025</td>
+                  <td>09/09/2025</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- Recommendations Sidebar -->
+        <aside class="recommendations-sidebar">
+          <!-- Similar Books -->
+          <section class="recommendation-section">
             <div class="section-header">
-              <h1>Buku Populer</h1>
-              <span class="see-more">ver más</span>
+              <h2 class="section-title">Libros similares</h2>
+              <a href="#" class="view-all">ver todo</a>
             </div>
-
-            <div class="books-grid">
-              <img src="../assets/images/miruko_vol_10.jpg" alt="Los Compas book cover" class="book-cover" />
-              <img src="../assets/images/img_image_7.png" alt="La Buena Cocina book cover" class="book-cover" />
-              <img src="../assets/images/img_image_8.png" alt="Aquitania book cover" class="book-cover" />
-              <img src="../assets/images/img_image_9.png" alt="El bosque de los cuatro vientos book cover" class="book-cover" />
+            <div class="book-list">
+              <div class="book-item">
+                <img src="../assets/images/img_image_14.png" alt="La ciudad de Vapor" class="book-thumbnail" />
+                <div class="book-details">
+                  <p class="book-author-small">Carlos Ruiz Zafón</p>
+                  <p class="book-title-small">La ciudad de Vapor</p>
+                  <div class="progress-container">
+                    <div class="progress-bar">
+                      <div class="progress-fill" style="width: 73%;"></div>
+                    </div>
+                    <span class="progress-text">73%</span>
+                  </div>
+                </div>
+              </div>
+              <div class="book-item">
+                <img src="../assets/images/img_image_15.png" alt="El asesinato de Platón" class="book-thumbnail" />
+                <div class="book-details">
+                  <p class="book-author-small">Marcos Chicot</p>
+                  <p class="book-title-small">El asesinato de Platón</p>
+                </div>
+              </div>
+              <div class="book-item">
+                <img src="../assets/images/img_image_16.png" alt="Siete mentiras" class="book-thumbnail" />
+                <div class="book-details">
+                  <p class="book-author-small">Elizabeth Kay</p>
+                  <p class="book-title-small">Siete mentiras</p>
+                </div>
+              </div>
+              <div class="book-item">
+                <img src="../assets/images/img_image_17.png" alt="Y Julia retó a los dioses" class="book-thumbnail" />
+                <div class="book-details">
+                  <p class="book-author-small">Santiago Posteguillo</p>
+                  <p class="book-title-small">Y Julia retó a los dioses</p>
+                  <div class="progress-container">
+                    <div class="progress-bar">
+                      <div class="progress-fill" style="width: 5%;"></div>
+                    </div>
+                    <span class="progress-text">5%</span>
+                  </div>
+                </div>
+              </div>
             </div>
           </section>
 
-          <!-- Trending Section -->
-          <section class="trending-section">
-            <h2 class="trending-title">Tendencias de esta semana</h2>
-
-            <div class="trending-list">
-              <article class="trending-item">
-                <img src="../assets/images/miruko_vol_10.jpg" alt="La leyenda de la peregrina book cover" class="trending-image" />
-
-                <div class="book-info">
-                  <div class="book-header">
-                    <div class="book-stats">
-                      <span class="author-name">Carmen Posadas</span>
-                      <div class="stat-item">
-                        <img src="../assets/images/img_vector_black_900.svg" alt="Likes" class="stat-icon" />
-                        <span>363</span>
-                      </div>
-                      <div class="stat-item">
-                        <img src="../assets/images/img_vector_black_900_12x18.svg" alt="Views" class="stat-icon" />
-                        <span>1.7k</span>
-                      </div>
-                    </div>
-                    <h3 class="book-title">La leyenda de la peregrina</h3>
-                  </div>
-
-                  <p class="book-description">
-                    La Peregrina es, sin duda, la perla sino más extraordinaria, más famosa de todos los
-                    tiempos. Procedente de las aguas del mar Caribe, fue entregada a Felipe II y desde
-                    entonces se convirtió en una de las joyas principales de la monarquía hispánica...
-                  </p>
-
-                  <div class="book-tags">
-                    <div class="book-tag">
-                      <img src="../assets/images/img_image_1.png" alt="Action genre" class="tag-icon" />
-                      <span class="tag-text">Acción</span>
-                    </div>
-                    <div class="book-tag">
-                      <img src="../assets/images/img_image_11.png" alt="Historical genre" class="tag-icon" />
-                      <span class="tag-text">Histórico</span>
-                    </div>
-                  </div>
-                </div>
-              </article>
-
-              <article class="trending-item">
-                <img src="../assets/images/img_image_12.png" alt="La cinta roja book cover" class="trending-image" />
-
-                <div class="book-info">
-                  <div class="book-header">
-                    <div class="book-stats">
-                      <span class="author-name">Lucy Adlington</span>
-                      <div class="stat-item">
-                        <img src="../assets/images/img_vector_black_900.svg" alt="Likes" class="stat-icon" />
-                        <span>128</span>
-                      </div>
-                      <div class="stat-item">
-                        <img src="../assets/images/img_visibility_24px.svg" alt="Views" class="stat-icon" />
-                        <span>1.2k</span>
-                      </div>
-                    </div>
-                    <h3 class="book-title">La cinta roja</h3>
-                  </div>
-
-                  <p class="book-description">
-                    A sus catorce años y en su primer día de trabajo, Ella se adentra en un mundo de sedas,
-                    tijeras, alfileres y bordados. Pero ése no es un taller de costura normal. Ni las suyas
-                    son clientas corrientes.
-                  </p>
-
-                  <div class="book-tags">
-                    <div class="book-tag">
-                      <img src="../assets/images/img_image_11.png" alt="Historical genre" class="tag-icon" />
-                      <span class="tag-text">Histórico</span>
-                    </div>
-                  </div>
-                </div>
-              </article>
+          <!-- Author's Books -->
+          <section class="recommendation-section">
+            <div class="section-header">
+              <h2 class="section-title">Del autor</h2>
+              <a href="#" class="view-all">ver todo</a>
             </div>
-
-            <button class="view-more-btn">View More</button>
+            <div class="book-list">
+              <div class="book-item">
+                <img src="../assets/images/img_image_18.png" alt="Pequeñas infamias" class="book-thumbnail" />
+                <div class="book-details">
+                  <p class="book-author-small">Carmen Posadas</p>
+                  <p class="book-title-small">Pequeñas infamias</p>
+                </div>
+              </div>
+              <div class="book-item">
+                <img src="../assets/images/img_image_20.png" alt="La maestra de títeres" class="book-thumbnail" />
+                <div class="book-details">
+                  <p class="book-author-small">Carmen Posadas</p>
+                  <p class="book-title-small">La maestra de títeres</p>
+                  <div class="progress-container">
+                    <div class="progress-bar">
+                      <div class="progress-fill" style="width: 61%;"></div>
+                    </div>
+                    <span class="progress-text">61%</span>
+                  </div>
+                </div>
+              </div>
+              <div class="book-item">
+                <img src="../assets/images/img_image_19.png" alt="Cinco moscas azules" class="book-thumbnail" />
+                <div class="book-details">
+                  <p class="book-author-small">Carmen Posadas</p>
+                  <p class="book-title-small">Cinco moscas azules</p>
+                </div>
+              </div>
+              <div class="book-item">
+                <img src="../assets/images/img_image_21.png" alt="La cinta roja" class="book-thumbnail" />
+                <div class="book-details">
+                  <p class="book-author-small">Carmen Posadas</p>
+                  <p class="book-title-small">La cinta roja</p>
+                </div>
+              </div>
+            </div>
           </section>
-        </main>
-
-        <!-- Right Sidebar -->
-        <aside class="right-sidebar">
-          <div class="sidebar-section">
-            <div class="collection-input">
-              <img src="../assets/images/img_vector_black_900_10x10.svg" alt="Collection icon" class="input-icon" />
-              <span>Colection</span>
-            </div>
-
-            <div class="sidebar-item">
-              <img src="../assets/images/img_group.svg" alt="Statistics icon" class="sidebar-icon" />
-              <span class="sidebar-text">Statistik</span>
-            </div>
-
-            <div class="sidebar-item">
-              <img src="../assets/images/img_vector_gray_600.svg" alt="Settings icon" class="sidebar-icon" />
-              <span class="sidebar-text">Pengaturan</span>
-            </div>
-          </div>
-
-          <div class="sidebar-section">
-            <div class="filter-header">
-              <h3 class="filter-title">Filter</h3>
-              <span class="filter-see-all">ver todo</span>
-            </div>
-
-            <div class="filter-list">
-              <div class="sidebar-item">
-                <img src="../assets/images/img_vector_gray_600_12x14.svg" alt="Reading icon" class="sidebar-icon" />
-                <span class="sidebar-text">Leyendo</span>
-              </div>
-
-              <div class="sidebar-item active">
-                <img src="../assets/images/img_image_11.png" alt="Historical icon" class="sidebar-icon" />
-                <span class="sidebar-text">Historical</span>
-              </div>
-
-              <div class="sidebar-item">
-                <img src="../assets/images/img_image_1.png" alt="Action icon" class="sidebar-icon" />
-                <span class="sidebar-text">Action</span>
-              </div>
-            </div>
-          </div>
         </aside>
       </div>
     </div>
-  </div>
+  </main>
 
   <script>
-    // Mobile menu toggle
-    const hamburger = document.querySelector('.hamburger');
-    const sidebar = document.querySelector('.sidebar');
-
-    hamburger?.addEventListener('click', () => {
-      sidebar.style.display = sidebar.style.display === 'flex' ? 'none' : 'flex';
+    // Mobile menu toggle functionality
+    document.querySelector('.mobile-menu-toggle')?.addEventListener('click', function() {
+      const sidebar = document.querySelector('.sidebar');
+      if (sidebar) {
+        sidebar.style.display = sidebar.style.display === 'flex' ? 'none' : 'flex';
+        sidebar.style.position = 'fixed';
+        sidebar.style.top = '0';
+        sidebar.style.left = '0';
+        sidebar.style.width = '100%';
+        sidebar.style.height = '100vh';
+        sidebar.style.backgroundColor = '#ffffff';
+        sidebar.style.zIndex = '1000';
+        sidebar.style.padding = '20px';
+        sidebar.style.overflowY = 'auto';
+      }
     });
 
-    // Filter item selection
-    const filterItems = document.querySelectorAll('.sidebar-item');
-    filterItems.forEach(item => {
-      item.addEventListener('click', () => {
-        filterItems.forEach(i => i.classList.remove('active'));
-        item.classList.add('active');
+    // Heart icon toggle functionality
+    document.querySelector('.heart-icon')?.addEventListener('click', function() {
+      this.style.filter = this.style.filter === 'hue-rotate(320deg)' ? 'none' : 'hue-rotate(320deg)';
+    });
+
+    // Tag button interactions
+    document.querySelectorAll('.tag-button').forEach(button => {
+      button.addEventListener('click', function() {
+        this.style.backgroundColor = this.style.backgroundColor === 'rgb(240, 217, 122)' ? '#f6e7ae' : '#f0d97a';
+      });
+    });
+
+    // Menu item hover effects
+    document.querySelectorAll('.menu-item').forEach(item => {
+      item.addEventListener('mouseenter', function() {
+        this.style.backgroundColor = '#f3f4f6';
+        this.style.borderRadius = '8px';
+      });
+
+      item.addEventListener('mouseleave', function() {
+        this.style.backgroundColor = 'transparent';
+      });
+    });
+
+    // Book item hover effects
+    document.querySelectorAll('.book-item').forEach(item => {
+      item.addEventListener('mouseenter', function() {
+        this.style.transform = 'translateY(-2px)';
+        this.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.1)';
+      });
+
+      item.addEventListener('mouseleave', function() {
+        this.style.transform = 'translateY(0)';
+        this.style.boxShadow = 'none';
       });
     });
 
     // Search functionality
-    const searchInput = document.querySelector('.search-input');
-    const searchIcon = document.querySelector('.search-icon');
-
-    searchIcon?.addEventListener('click', () => {
-      const query = searchInput.value.trim();
-      if (query) {
-        console.log('Searching for:', query);
-        // Implement search logic here
-      }
-    });
-
-    searchInput?.addEventListener('keypress', (e) => {
+    document.querySelector('.search-input')?.addEventListener('keypress', function(e) {
       if (e.key === 'Enter') {
-        const query = searchInput.value.trim();
-        if (query) {
-          console.log('Searching for:', query);
-          // Implement search logic here
-        }
+        console.log('Searching for:', this.value);
+        // Add search functionality here
       }
     });
 
-    // Book cover hover effects
-    const bookCovers = document.querySelectorAll('.book-cover');
-    bookCovers.forEach(cover => {
-      cover.addEventListener('click', () => {
-        console.log('Book clicked:', cover.alt);
-        // Implement book detail navigation
-      });
-    });
-
-    // View More button
-    const viewMoreBtn = document.querySelector('.view-more-btn');
-    viewMoreBtn?.addEventListener('click', () => {
-      console.log('Loading more trending books...');
-      // Implement load more functionality
+    document.querySelector('.search-icon')?.addEventListener('click', function() {
+      const searchInput = document.querySelector('.search-input');
+      if (searchInput) {
+        console.log('Searching for:', searchInput.value);
+        // Add search functionality here
+      }
     });
   </script>
 </body>

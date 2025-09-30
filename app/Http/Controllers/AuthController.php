@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Genre;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -43,7 +44,16 @@ class AuthController extends Controller
     public function showProfile()
     {
         $user = Auth::user();
-        return view('profile_petugas', compact('user'));
+        $genreList = Genre::select('tag')
+            ->distinct()
+            ->pluck('tag')
+            ->filter()
+            ->take(10)
+            ->values();
+        return view('profile_petugas', [
+            'user'     => $user,
+            'genreList' => $genreList,
+        ]);
     }
 
     // Update profil

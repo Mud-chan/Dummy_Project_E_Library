@@ -41,6 +41,13 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/buku/{id_buku}/edit', [BukuController::class, 'show_edit_buku'])->name('edit.buku');
     Route::put('/update-buku/{id_buku}', [BukuController::class, 'update_buku'])->name('update.buku');
     Route::delete('/hapus-buku/{id_buku}', [BukuController::class, 'delete_buku'])->name('hapus.buku');
+    Route::get('/buku/{id_buku}/detail', [BukuController::class, 'detail_buku'])->name('buku.detail');
+    Route::get('/cari-buku', [BukuController::class, 'cari_buku'])->name('cari.buku');
+    Route::get('/detail-genre-petugas', [BukuController::class, 'show_genre'])->name('genre.detail');
+    Route::get('/tambah-genre', [BukuController::class, 'show_tambah_genre'])->name('genre.tambah');
+    Route::post('/genre/store', [BukuController::class, 'genre_store'])->name('genre.store');
+    Route::get('/genre/{id}/edit', [BukuController::class, 'show_edit_genre'])->name('genre.edit');
+    Route::put('/update-genre/{id}', [BukuController::class, 'genre_update'])->name('genre.update');
+    Route::delete('/genre/{id}', [BukuController::class, 'hapus_genre'])->name('genre.hapus');
 
 });
-

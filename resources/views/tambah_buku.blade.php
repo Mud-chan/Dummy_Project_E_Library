@@ -31,41 +31,20 @@
                     </select>
                 </div>
 
-                <div class="dropdown-container">
-                    <select name="genre2" class="dropdown-field" aria-label="Select genre 2">
-                        <option value="">Genre 2</option>
-                        <option value="action">Action</option>
-                        <option value="adventure">Adventure</option>
-                        <option value="horror">Horror</option>
-                        <option value="mystery">Mystery</option>
-                        <option value="fantasy">Fantasy</option>
-                    </select>
-                </div>
             </div>
 
             <div class="dropdown-row">
                 <div class="dropdown-container">
-                    <select name="genre1" class="dropdown-field" aria-label="Select genre 1" required>
-                        <option value="">Genre 1</option>
-                        <option value="action">Action</option>
-                        <option value="adventure">Adventure</option>
-                        <option value="horror">Horror</option>
-                        <option value="mystery">Mystery</option>
-                        <option value="fantasy">Fantasy</option>
+                    <label for="genres">Genre</label>
+                    <select name="genres[]" id="genres" class="dropdown-field" multiple required>
+                        @foreach ($genreLists as $id => $tag)
+                            <option value="{{ $id }}">{{ ucfirst($tag) }}</option>
+                        @endforeach
                     </select>
-                </div>
-
-                <div class="dropdown-container">
-                    <select name="genre3" class="dropdown-field" aria-label="Select genre 3">
-                        <option value="">Genre 3</option>
-                        <option value="action">Action</option>
-                        <option value="adventure">Adventure</option>
-                        <option value="horror">Horror</option>
-                        <option value="mystery">Mystery</option>
-                        <option value="fantasy">Fantasy</option>
-                    </select>
+                    <small class="text-muted">* Gunakan Ctrl / Command untuk pilih lebih dari satu</small>
                 </div>
             </div>
+
 
             <button type="submit" class="submit-button">Tambah</button>
         </form>

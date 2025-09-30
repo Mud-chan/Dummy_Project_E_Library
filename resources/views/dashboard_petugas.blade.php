@@ -12,14 +12,14 @@
         <div class="books-grid">
             @foreach ($popularBooks as $buku)
                 <div class="book-card">
-                    <img src="../uploaded_files/{{ $buku->thumb }}" alt="Mieruko-chan" class="book-cover" />
+                    <a href="{{ route('buku.detail', $buku->id_buku) }}">
+                        <img src="{{ asset('uploaded_files/' . $buku->thumb) }}" alt="Cover {{ $buku->judul }}"
+                            class="book-cover" />
+                    </a>
                     <div class="book-title">{{ \Illuminate\Support\Str::limit($buku->judul, 20, '...') }}</div>
                 </div>
             @endforeach
-
-
         </div>
-
     </section>
 
     <div class="section-header">
@@ -29,10 +29,12 @@
     <section class="book-collection">
         @foreach ($contents as $book)
             <article class="book-item">
-
                 <div class="book-content">
-                    <img src="../uploaded_files/{{ $book->thumb }}" alt="La leyenda de la peregrina book cover"
-                        class="book-image" />
+                    <a href="{{ route('buku.detail', $book->id_buku) }}">
+                        <img src="{{ asset('uploaded_files/' . $book->thumb) }}" alt="Cover {{ $book->judul }}"
+                            class="book-image" />
+                    </a>
+
                     <div class="book-info">
                         <div class="book-header">
                             <div>
@@ -41,40 +43,47 @@
                             </div>
                             <div class="book-stats">
                                 <div class="stat-item">
-                                    <img src="../assets/images/love.svg" alt="Likes" />
+                                    <img src="{{ asset('assets/images/love.svg') }}" alt="Likes" />
                                     <span class="stat-text">363</span>
                                 </div>
                                 <div class="stat-item views">
-                                    <img src="../assets/images/eye.svg" alt="Views" />
+                                    <img src="{{ asset('assets/images/eye.svg') }}" alt="Views" />
                                     <span class="stat-text">{{ $book->peminjaman_count }}</span>
                                 </div>
                             </div>
                         </div>
+
                         <p class="book-description">
                             {{ \Illuminate\Support\Str::limit($book->deskripsi, 100, '...') }}
                         </p>
+
+                        {{-- Tags Genre --}}
                         <div class="book-tags">
-                            @foreach ($book->genre as $tag)
-                                <div class="tag">
-                                    <img src="../assets/images/img_image_1.png" alt="{{ $tag->genre }} tag" />
-                                    <span>{{ $tag->genre }}</span>
-                                </div>
+                            @foreach ($book->genres as $tag)
+                                <a href="{{ route('cari.buku', ['genre' => $tag->tag, 'kategori' => request('kategori')]) }}"
+                                    class="tag" style="text-decoration:none;">
+                                    <img src="{{ asset('assets/images/img_image_1.png') }}"
+                                        alt="{{ $tag->tag }} tag" />
+                                    <span>{{ $tag->tag }}</span>
+                                </a>
                             @endforeach
                         </div>
+
 
                         <div class="book-tags">
                             <a href="{{ route('edit.buku', $book->id_buku) }}" style="text-decoration: none;">
                                 <div class="tag">
-                                    <img src="../assets/images/edit-fill-1480.svg" alt="Action tag" />
+                                    <img src="{{ asset('assets/images/edit-fill-1480.svg') }}" alt="Edit Buku" />
                                     <span>Edit</span>
                                 </div>
                             </a>
+
                             <div class="tag">
                                 <form id="form-hapus-{{ $book->id_buku }}"
                                     action="{{ route('hapus.buku', $book->id_buku) }}" method="POST">
                                     @csrf
                                     @method('DELETE')
-                                    <img src="../assets/images/trash-bin-trash.svg" alt="Delete icon" />
+                                    <img src="{{ asset('assets/images/trash-bin-trash.svg') }}" alt="Delete icon" />
                                     <span
                                         onclick="if(confirm('Yakin mau hapus buku ini?')) document.getElementById('form-hapus-{{ $book->id_buku }}').submit()"
                                         style="cursor:pointer; color:red;">
@@ -82,15 +91,12 @@
                                     </span>
                                 </form>
                             </div>
-
                         </div>
                     </div>
                 </div>
-
             </article>
         @endforeach
     </section>
-
 
     <section class="trending-section">
         <button class="view-more-btn">View More</button>

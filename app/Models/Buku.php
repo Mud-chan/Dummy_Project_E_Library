@@ -30,15 +30,16 @@ class Buku extends Model
 
     public function peminjaman()
     {
-        return $this->hasMany(Peminjaman::class, 'id_buku');
+        return $this->hasMany(Peminjaman::class, 'id_buku', 'id_buku');
     }
+
 
     public function rating()
     {
         return $this->hasMany(Rating::class, 'id_buku');
     }
 
-        public function suka()
+    public function suka()
     {
         return $this->hasMany(Suka::class, 'id_buku');
     }
@@ -47,8 +48,19 @@ class Buku extends Model
     {
         return $this->rating()->average('rating') ?? 0;
     }
-    public function genre()
+    public function genres()
     {
-        return $this->hasMany(Genre::class, 'id_buku');
+        return $this->belongsToMany(
+            Genre::class,
+            'detail_buku',
+            'id_buku',
+            'id_genre'
+        );
+    }
+
+
+    public function bookmark()
+    {
+        return $this->hasMany(Bookmark::class, 'id_buku', 'id_buku');
     }
 }

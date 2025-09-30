@@ -2,7 +2,6 @@
 @section('main')
     <link rel="stylesheet" href="{{ asset('assets/css/koleksi.css') }}">
 
-
     <a href="{{ route('tambah.buku') }}" style="text-decoration: none;">
         <div class="sidebar-item">
             <img src="{{ asset('assets/images/plus-circle.svg') }}" alt="Tambah Buku" />
@@ -74,7 +73,7 @@
                                     action="{{ route('hapus.buku', $book->id_buku) }}" method="POST">
                                     @csrf
                                     @method('DELETE')
-                                    <img src="{{ asset('assets/images/trash-bin-trash.svg') }}" alt="Delete icon" />
+                                    <img src="{{ asset('assets/images/trash-bin-trash.svg') }}" alt="Hapus Buku" />
                                     <span
                                         onclick="if(confirm('Yakin mau hapus buku ini?')) document.getElementById('form-hapus-{{ $book->id_buku }}').submit()"
                                         style="cursor:pointer; color:red;">
@@ -87,14 +86,7 @@
                 </div>
             </article>
         @empty
-            <p style="text-align:center; margin-top:20px;">Belum ada buku yang tersedia.</p>
+            <p>Tidak ada buku ditemukan.</p>
         @endforelse
     </section>
-
-    <!-- Pagination -->
-    <div class="pagination-container">
-        {{ $contents->onEachSide(1)->links('pagination::simple-bootstrap-5') }}
-    </div>
-
-
 @endsection

@@ -81,56 +81,17 @@
                     </select>
                 </div>
 
-                @php
-                    $genres = $book->genre->pluck('genre')->toArray();
-                @endphp
-
                 <div class="dropdown-container">
-                    <select name="genre1" class="dropdown-field" aria-label="Select genre 1" required>
-                        <option value="">Genre 1</option>
-                        <option value="action" {{ isset($genres[0]) && $genres[0] == 'action' ? 'selected' : '' }}>Action
-                        </option>
-                        <option value="adventure" {{ isset($genres[0]) && $genres[0] == 'adventure' ? 'selected' : '' }}>
-                            Adventure</option>
-                        <option value="horror" {{ isset($genres[0]) && $genres[0] == 'horror' ? 'selected' : '' }}>Horror
-                        </option>
-                        <option value="mystery" {{ isset($genres[0]) && $genres[0] == 'mystery' ? 'selected' : '' }}>
-                            Mystery</option>
-                        <option value="fantasy" {{ isset($genres[0]) && $genres[0] == 'fantasy' ? 'selected' : '' }}>
-                            Fantasy</option>
+                    <label for="genres">Genre</label>
+                    <select name="genres[]" id="genres" class="dropdown-field" multiple required>
+                        @foreach ($genres as $genre)
+                            <option value="{{ $genre->id_genre }}"
+                                {{ in_array($genre->id_genre, $book->genres->pluck('id_genre')->toArray()) ? 'selected' : '' }}>
+                                {{ ucfirst($genre->tag) }}
+                            </option>
+                        @endforeach
                     </select>
-                </div>
-
-                <div class="dropdown-container">
-                    <select name="genre2" class="dropdown-field" aria-label="Select genre 2">
-                        <option value="">Genre 2</option>
-                        <option value="action" {{ isset($genres[1]) && $genres[1] == 'action' ? 'selected' : '' }}>Action
-                        </option>
-                        <option value="adventure" {{ isset($genres[1]) && $genres[1] == 'adventure' ? 'selected' : '' }}>
-                            Adventure</option>
-                        <option value="horror" {{ isset($genres[1]) && $genres[1] == 'horror' ? 'selected' : '' }}>Horror
-                        </option>
-                        <option value="mystery" {{ isset($genres[1]) && $genres[1] == 'mystery' ? 'selected' : '' }}>
-                            Mystery</option>
-                        <option value="fantasy" {{ isset($genres[1]) && $genres[1] == 'fantasy' ? 'selected' : '' }}>
-                            Fantasy</option>
-                    </select>
-                </div>
-
-                <div class="dropdown-container">
-                    <select name="genre3" class="dropdown-field" aria-label="Select genre 3">
-                        <option value="">Genre 3</option>
-                        <option value="action" {{ isset($genres[2]) && $genres[2] == 'action' ? 'selected' : '' }}>Action
-                        </option>
-                        <option value="adventure" {{ isset($genres[2]) && $genres[2] == 'adventure' ? 'selected' : '' }}>
-                            Adventure</option>
-                        <option value="horror" {{ isset($genres[2]) && $genres[2] == 'horror' ? 'selected' : '' }}>Horror
-                        </option>
-                        <option value="mystery" {{ isset($genres[2]) && $genres[2] == 'mystery' ? 'selected' : '' }}>
-                            Mystery</option>
-                        <option value="fantasy" {{ isset($genres[2]) && $genres[2] == 'fantasy' ? 'selected' : '' }}>
-                            Fantasy</option>
-                    </select>
+                    <small class="text-muted">* Gunakan Ctrl / Command untuk pilih lebih dari satu</small>
                 </div>
 
             </div>

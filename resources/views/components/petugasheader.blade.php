@@ -6,9 +6,18 @@
     <title>E-Library Collection | Digital Books & Reading Platform</title>
     <link rel="icon" href="{{ asset('assets/images/img_cover.svg') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/koleksi.css') }}">
-    <script type="module"
-        src="https://static.rocket.new/rocket-web.js?_cfg=https%3A%2F%2Fmiyakoaiha5841back.builtwithrocket.new&_be=https%3A%2F%2Fapplication.rocket.new&_v=0.1.8">
-    </script>
+    <style>
+        /* Perbaikan tambahan */
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .active-item {
+            background-color: #F6E7AE;
+            border-radius: 8px;
+        }
+    </style>
 </head>
 
 <body>
@@ -16,26 +25,26 @@
         <div class="content-wrapper">
             <!-- Left Sidebar -->
             <aside class="sidebar">
-                <a href="{{ route('dashboard.petugas') }}" style="text-decoration: none;">
+                <a href="{{ route('dashboard.petugas') }}">
                     <img src="{{ asset('assets/images/img_sidebar_logo.png') }}" alt="E-Library Logo"
                         class="sidebar-logo" />
                 </a>
 
+                {{-- ================= KATEGORI ================= --}}
                 <div class="sidebar-section">
                     <h3>Kategori</h3>
                     <nav class="sidebar-menu">
-                        <div class="menu-item">
-                            <img src="{{ asset('assets/images/book.svg') }}" alt="Novel icon" />
-                            <span>Novel</span>
-                        </div>
-                        <div class="menu-item">
-                            <img src="{{ asset('assets/images/book.svg') }}" alt="Manga icon" />
-                            <span>Manga</span>
-                        </div>
-                        <div class="menu-item">
-                            <img src="{{ asset('assets/images/book.svg') }}" alt="Manhwa icon" />
-                            <span>Manhwa</span>
-                        </div>
+                        @php
+                            $kategoriList = ['novel', 'manga', 'manhwa'];
+                            $kategoriDipilih = request('kategori');
+                        @endphp
+                        @foreach ($kategoriList as $kategori)
+                            <a href="{{ route('cari.buku', ['kategori' => $kategori, 'genre' => request('genre')]) }}"
+                                class="menu-item {{ $kategoriDipilih === $kategori ? 'active-item' : '' }}">
+                                <img src="{{ asset('assets/images/book.svg') }}" alt="{{ $kategori }} icon" />
+                                <span>{{ ucfirst($kategori) }}</span>
+                            </a>
+                        @endforeach
                     </nav>
                 </div>
             </aside>
@@ -47,18 +56,25 @@
                     <button class="mobile-menu-btn" aria-label="Open menu">☰</button>
 
                     <div class="search-container">
-                        <input type="search" class="search-input" placeholder="Cari Buku" aria-label="Search books" />
-                        <img src="{{ asset('assets/images/img_searchicon.svg') }}" alt="Search" class="search-icon" />
+                        <form action="{{ route('cari.buku') }}" method="GET">
+                            <input type="search" name="q" class="search-input" placeholder="Cari Buku"
+                                value="{{ request('q') }}" aria-label="Search books" />
+                            <button type="submit" style="border:none;background:none;">
+                                <img src="{{ asset('assets/images/img_searchicon.svg') }}" alt="Search"
+                                    class="search-icon" />
+                            </button>
+                        </form>
                     </div>
 
                     <nav class="header-nav">
-                        <a href="{{ route('profile.show') }}" class="nav-item">{{ Auth::user()->name }} ({{ Auth::user()->role }})</a>
-                        <a href="{{ route('profile.show') }}" style="text-decoration: none;">
+                        <a href="{{ route('profile.show') }}" class="nav-item">
+                            {{ Auth::user()->name }} ({{ Auth::user()->role }})
+                        </a>
+                        <a href="{{ route('profile.show') }}">
                             <img src="{{ Auth::user()->image ? asset('uploaded_profiles/' . Auth::user()->image) : asset('assets/images/no-cover.png') }}"
                                 alt="User avatar" class="user-avatar" />
                         </a>
                     </nav>
-
                 </header>
 
                 <main>
@@ -69,17 +85,13 @@
             <!-- Right Sidebar -->
             <aside class="right-sidebar">
                 <div class="sidebar-section">
-                    <a href="{{ route('koleksi.petugas') }}" style="text-decoration: none;">
-                        <div class="sidebar-item">
+                    <a href="{{ route('koleksi.petugas') }}">
+                        <div class="sidebar-item {{ request()->routeIs('koleksi.petugas') ? 'active-item' : '' }}">
                             <img src="{{ asset('assets/images/archives-document.svg') }}" alt="Collection icon" />
                             <span>Colection</span>
                         </div>
                     </a>
 
-                    <div class="sidebar-item">
-                        <img src="{{ asset('assets/images/basic-popular-statistic.svg') }}" alt="Statistics icon" />
-                        <span>Statistik</span>
-                    </div>
 
                     <div class="sidebar-item">
                         <img src="{{ asset('assets/images/bookmark.svg') }}" alt="Bookmark icon" />
@@ -100,37 +112,38 @@
                     </form>
                 </div>
 
+                {{-- ================= FILTER GENRE ================= --}}
                 <div class="sidebar-section">
                     <div class="filter-header">
                         <h2>Filter</h2>
-                        <a href="#" class="view-all">Lainnya</a>
+                        <a href="{{ route('genre.detail') }}" class="view-all">Lainya</a>
                     </div>
 
-                    <div class="sidebar-item">
-                        <img src="{{ asset('assets/images/img_image_3.png') }}" alt="Horror icon" />
-                        <span>Horor</span>
-                    </div>
+                    <a href="{{ route('genre.tambah') }}"
+                            class="sidebar-item">
+                            <img src="{{ asset('assets/images/plus-circle.svg') }}" alt="icon" />
+                            <span>Tambah Genre</span>
+                    </a>
 
-                    <div class="sidebar-item">
-                        <img src="{{ asset('assets/images/img_image_1.png') }}" alt="Action icon" />
-                        <span>Action</span>
-                    </div>
+                    @php
+                        $genreDipilih = request('genre');
+                    @endphp
 
-                    <div class="sidebar-item">
-                        <img src="{{ asset('assets/images/img_image_1.png') }}" alt="Fantasy icon" />
-                        <span>Fantasi</span>
-                    </div>
+                    @forelse ($genreList as $genre)
+                        <a href="{{ route('cari.buku', ['genre' => $genre, 'kategori' => request('kategori')]) }}"
+                            class="sidebar-item {{ $genreDipilih === $genre ? 'active-item' : '' }}">
 
-                    <div class="sidebar-item">
-                        <img src="{{ asset('assets/images/img_image_1.png') }}" alt="Adventure icon" />
-                        <span>Adventure</span>
-                    </div>
+                            <span>{{ ucfirst($genre) }}</span>
+                        </a>
+                    @empty
+                        <p style="padding: 10px; font-size: 14px; color: #777;">Tidak ada genre tersedia</p>
+                    @endforelse
+
                 </div>
+
             </aside>
         </div>
     </main>
-
-    <script src="{{ asset('assets/js/koleksi.js') }}"></script>
 </body>
 
 </html>

@@ -14,7 +14,7 @@ class Peminjaman extends Model
     public $timestamps = false; // tidak menggunakan kolom timestamps
 
     protected $fillable = [
-        'id_peminjaman ', 'id_pengunjung', 'status', 'id_buku','tgl_pinjam','tgl_kembali'
+        'id_peminjaman', 'id_pengunjung', 'status', 'id_buku','tgl_pinjam','tgl_kembali'
     ];
 
     public function user()
