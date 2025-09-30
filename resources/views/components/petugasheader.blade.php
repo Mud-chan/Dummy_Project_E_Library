@@ -92,16 +92,13 @@
                         </div>
                     </a>
 
+                    <a href="{{ route('peminjaman.detail') }}">
 
-                    <div class="sidebar-item">
-                        <img src="{{ asset('assets/images/bookmark.svg') }}" alt="Bookmark icon" />
-                        <span>Bookmark</span>
-                    </div>
-
-                    <div class="sidebar-item">
-                        <img src="{{ asset('assets/images/setting-setting.svg') }}" alt="Borrow icon" />
-                        <span>Peminjaman</span>
-                    </div>
+                        <div class="sidebar-item">
+                            <img src="{{ asset('assets/images/setting-setting.svg') }}" alt="Borrow icon" />
+                            <span>Peminjaman</span>
+                        </div>
+                    </a>
 
                     <form method="POST" action="{{ route('logout') }}" id="logout-form">
                         @csrf
@@ -119,10 +116,9 @@
                         <a href="{{ route('genre.detail') }}" class="view-all">Lainya</a>
                     </div>
 
-                    <a href="{{ route('genre.tambah') }}"
-                            class="sidebar-item">
-                            <img src="{{ asset('assets/images/plus-circle.svg') }}" alt="icon" />
-                            <span>Tambah Genre</span>
+                    <a href="{{ route('genre.tambah') }}" class="sidebar-item">
+                        <img src="{{ asset('assets/images/plus-circle.svg') }}" alt="icon" />
+                        <span>Tambah Genre</span>
                     </a>
 
                     @php

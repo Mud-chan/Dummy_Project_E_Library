@@ -52,6 +52,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/genre/{id}/edit', [BukuController::class, 'show_edit_genre'])->name('genre.edit');
     Route::put('/update-genre/{id}', [BukuController::class, 'genre_update'])->name('genre.update');
     Route::delete('/genre/{id}', [BukuController::class, 'hapus_genre'])->name('genre.hapus');
+    Route::get('/peminjaman', [BukuController::class, 'show_detail_peminjaman'])->name('peminjaman.detail');
+    Route::delete('/peminjaman/{id}', [BukuController::class, 'destroyPeminjaman'])->name('peminjaman.destroy');
 });
 
 Route::middleware(['auth'])->group(function () {
@@ -63,5 +65,4 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/buku/{id_buku}/pinjam', [BukuPengunjungController::class, 'pinjam'])->name('buku.pinjam');
     Route::get('/riwayat-pinjam', [BukuPengunjungController::class, 'riwayat_pinjam'])->name('riwayat.pinjam.pengunjung');
     Route::get('/show-pinjam', [BukuPengunjungController::class, 'show_pinjam'])->name('show.pinjam.pengunjung');
-
 });

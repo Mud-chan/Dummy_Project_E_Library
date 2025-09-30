@@ -460,4 +460,60 @@ class BukuController extends Controller
 
         return redirect()->route('genre.detail')->with('success', 'Genre berhasil dihapus!');
     }
+    public function show_detail_peminjaman()
+    {
+        if (!Auth::check()) {
+            return redirect()->route('login')->with('error', 'Silakan login terlebih dahulu.');
+        }
+
+        $genreList = Genre::select('tag')
+            ->distinct()
+            ->pluck('tag')
+            ->filter()
+            ->take(10)
+            ->values();
+
+        try {
+            // 🔹 Ambil semua data peminjaman dengan relasi user & buku
+            $peminjaman = Peminjaman::with(['user', 'buku'])
+                ->orderBy('tgl_pinjam', 'DESC')
+                ->paginate(20);
+
+            // 🔹 Hitung jumlah buku yang tersedia (tidak dipinjam / sudah dikembalikan)
+            $tersedia = Peminjaman::where(function ($q) {
+                $q->where('status', '!=', 'dipinjam')
+                    ->orWhereNull('status');
+            })
+                ->distinct('id_buku')
+                ->count();
+
+            return view('daftar_peminjam_buku', [
+                "title"      => "Daftar Semua Peminjam",
+                "peminjaman" => $peminjaman,
+                "tersedia"   => $tersedia,
+                "genreList"  => $genreList,
+            ]);
+        } catch (\Exception $e) {
+            Log::error('Daftar Peminjam gagal', [
+                'error' => $e->getMessage()
+            ]);
+            return redirect()->route('koleksi.petugas')->with('error', 'Gagal membuka daftar peminjam');
+        }
+    }
+
+    public function destroyPeminjaman($id)
+    {
+        try {
+            $peminjaman = Peminjaman::findOrFail($id);
+            $peminjaman->delete();
+
+            return back()->with('success', 'Data peminjaman berhasil dihapus.');
+        } catch (\Exception $e) {
+            Log::error('Gagal menghapus peminjaman', [
+                'id' => $id,
+                'error' => $e->getMessage()
+            ]);
+            return back()->with('error', 'Gagal menghapus data peminjaman.');
+        }
+    }
 }
