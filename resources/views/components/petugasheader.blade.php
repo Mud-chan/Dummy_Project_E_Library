@@ -25,7 +25,7 @@
         <div class="content-wrapper">
             <!-- Left Sidebar -->
             <aside class="sidebar">
-                <a href="{{ route('dashboard.petugas') }}">
+                <a href="{{ route('dashboard.pengunjung') }}">
                     <img src="{{ asset('assets/images/img_sidebar_logo.png') }}" alt="E-Library Logo"
                         class="sidebar-logo" />
                 </a>
@@ -67,10 +67,10 @@
                     </div>
 
                     <nav class="header-nav">
-                        <a href="{{ route('profile.show') }}" class="nav-item">
+                        <a href="{{ route('profile.show.pengunjung') }}" class="nav-item">
                             {{ Auth::user()->name }} ({{ Auth::user()->role }})
                         </a>
-                        <a href="{{ route('profile.show') }}">
+                        <a href="{{ route('profile.show.pengunjung') }}">
                             <img src="{{ Auth::user()->image ? asset('uploaded_profiles/' . Auth::user()->image) : asset('assets/images/no-cover.png') }}"
                                 alt="User avatar" class="user-avatar" />
                         </a>

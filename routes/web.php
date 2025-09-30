@@ -31,6 +31,9 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::get('/profile', [AuthController::class, 'showProfile'])->name('profile.show');
 Route::put('/profile', [AuthController::class, 'updateProfile'])->name('profile.update');
 
+Route::get('/profile/pengunjung', [AuthController::class, 'showProfilePengunjung'])->name('profile.show.pengunjung');
+Route::put('/profile/pengunjung', [AuthController::class, 'updateProfilePengunjung'])->name('profile.update.pengunjung');
+
 
 
 Route::middleware(['auth'])->group(function () {

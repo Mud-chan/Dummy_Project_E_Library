@@ -55,9 +55,57 @@ class AuthController extends Controller
             'genreList' => $genreList,
         ]);
     }
+        public function showProfilePengunjung()
+    {
+        $user = Auth::user();
+        $genreList = Genre::select('tag')
+            ->distinct()
+            ->pluck('tag')
+            ->filter()
+            ->take(10)
+            ->values();
+        return view('profile_pengunjung', [
+            'user'     => $user,
+            'genreList' => $genreList,
+        ]);
+    }
 
     // Update profil
     public function updateProfile(Request $request)
+    {
+        /** @var \App\Models\User $user */
+        $user = Auth::user();
+
+        $request->validate([
+            'name'  => 'required|string|max:255',
+            'email' => 'required|string|email|unique:users,email,' . $user->id,
+            'nohp'  => 'required|string|max:15',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5048',
+        ]);
+
+        // Update data dasar
+        $user->name  = $request->name;
+        $user->email = $request->email;
+        $user->nohp  = $request->nohp;
+
+        // Update foto kalau ada
+        if ($request->hasFile('image')) {
+            if ($user->image && file_exists(public_path('uploaded_profiles/' . $user->image))) {
+                unlink(public_path('uploaded_profiles/' . $user->image));
+            }
+
+            $image = $request->file('image');
+            $imageName = time() . '_' . uniqid() . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path('uploaded_profiles'), $imageName);
+            $user->image = $imageName;
+        }
+
+        $user->save();
+
+        return back()->with('success', 'Profil berhasil diperbarui');
+    }
+
+        public function updateProfilePengunjung(Request $request)
     {
         /** @var \App\Models\User $user */
         $user = Auth::user();
