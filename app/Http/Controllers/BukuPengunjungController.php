@@ -94,7 +94,7 @@ class BukuPengunjungController extends Controller
             $buku = Buku::with(['genres', 'rating', 'bookmark', 'peminjaman.user'])
                 ->findOrFail($id_buku);
 
-            return view('detail_buku_petugas', [
+            return view('detail_buku_pengunjung', [
                 "title"      => "Detail Buku",
                 "book"       => $buku,
                 "peminjaman" => $buku->peminjaman,
@@ -105,7 +105,7 @@ class BukuPengunjungController extends Controller
                 'id_buku' => $id_buku,
                 'error'   => $e->getMessage()
             ]);
-            return redirect()->route('koleksi.petugas')->with('error', 'Gagal membuka detail buku');
+            return redirect()->route('koleksi.pengunjung')->with('error', 'Gagal membuka detail buku');
         }
     }
 

@@ -12,7 +12,7 @@
         @forelse ($contents as $book)
             <article class="book-item">
                 <div class="book-content">
-                    <a href="{{ route('buku.detail', $book->id_buku) }}">
+                    <a href="{{ route('buku.detail.pengunjung', $book->id_buku) }}">
                         <img src="{{ asset('uploaded_files/' . $book->thumb) }}" alt="Cover {{ $book->judul }}"
                             class="book-image" />
                     </a>
