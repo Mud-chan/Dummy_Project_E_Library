@@ -128,11 +128,5 @@ class AuthController extends Controller
         return redirect()->route('login');
     }
 
-    public function dashboardPengunjung()
-    {
-        if (Auth::user()->role !== 'pengunjung') {
-            abort(403, 'Anda tidak punya akses.');
-        }
-        return view('dashboard_pengunjung');
-    }
+
 }

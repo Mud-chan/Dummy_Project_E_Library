@@ -3,6 +3,8 @@
 // web.php
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\BukuController;
+use App\Http\Controllers\BukuPengunjungController;
 
 Route::get('/', function () {
     return view('index');
@@ -21,9 +23,7 @@ Route::post('/login', [AuthController::class, 'login'])->name('login.store');
 //     ->name('dashboard.petugas')
 //     ->middleware('auth');
 
-Route::get('/pengunjung/dashboard', [AuthController::class, 'dashboardPengunjung'])
-    ->name('dashboard.pengunjung')
-    ->middleware('auth');
+
 
 // Logout
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
@@ -31,7 +31,7 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::get('/profile', [AuthController::class, 'showProfile'])->name('profile.show');
 Route::put('/profile', [AuthController::class, 'updateProfile'])->name('profile.update');
 
-use App\Http\Controllers\BukuController;
+
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard-petugas', [BukuController::class, 'index'])->name('dashboard.petugas');
@@ -49,5 +49,12 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/genre/{id}/edit', [BukuController::class, 'show_edit_genre'])->name('genre.edit');
     Route::put('/update-genre/{id}', [BukuController::class, 'genre_update'])->name('genre.update');
     Route::delete('/genre/{id}', [BukuController::class, 'hapus_genre'])->name('genre.hapus');
+});
 
+Route::middleware(['auth'])->group(function () {
+    Route::get('/dashboard-pengunjung', [BukuPengunjungController::class, 'index'])->name('dashboard.pengunjung');
+    Route::get('/koleksi-petugas', [BukuPengunjungController::class, 'koleksi'])->name('koleksi.petugas');
+    Route::get('/buku/{id_buku}/detail', [BukuPengunjungController::class, 'detail_buku'])->name('buku.detail');
+    Route::get('/cari-buku', [BukuPengunjungController::class, 'cari_buku'])->name('cari.buku');
+    Route::get('/detail-genre-petugas', [BukuPengunjungController::class, 'show_genre'])->name('genre.detail');
 });
