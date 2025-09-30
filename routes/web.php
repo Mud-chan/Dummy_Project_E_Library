@@ -60,4 +60,5 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/buku/{id_buku}/detail/pengunjung', [BukuPengunjungController::class, 'detail_buku'])->name('buku.detail.pengunjung');
     Route::get('/cari-buku-pengunjung', [BukuPengunjungController::class, 'cari_buku'])->name('cari.buku.pengunjung');
     Route::get('/detail-genre-pengunjung', [BukuPengunjungController::class, 'show_genre'])->name('genre.detail.pengunjung');
+    Route::post('/buku/{id_buku}/pinjam', [BukuPengunjungController::class, 'pinjam'])->name('buku.pinjam');
 });

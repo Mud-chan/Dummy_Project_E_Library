@@ -178,6 +178,17 @@
         }
     </style>
 
+    @if (session('success'))
+        <div style="background: #d4edda; color:#155724; padding:10px; border-radius:8px; margin-bottom:15px;">
+            {{ session('success') }}
+        </div>
+    @endif
+
+    @if (session('error'))
+        <div style="background: #f8d7da; color:#721c24; padding:10px; border-radius:8px; margin-bottom:15px;">
+            {{ session('error') }}
+        </div>
+    @endif
 
     <!-- Book Detail Section -->
     <section class="detail-wrapper">
@@ -220,6 +231,18 @@
                 {{ $book->deskripsi ?? 'Tidak ada deskripsi tersedia.' }}
             </p>
         </div>
-        <button type="submit" class="submit-button">Pinjam</button>
+        @php
+            $userId = Auth::id();
+            $pinjamAktif = $book->peminjaman->where('id_pengunjung', $userId)->where('status', 'dipinjam')->first();
+        @endphp
+
+        <form action="{{ route('buku.pinjam', $book->id_buku) }}" method="POST">
+            @csrf
+            <button type="submit" class="submit-button"
+                style="background-color: {{ $pinjamAktif ? '#ccc' : '#f6e7ae' }}; color: {{ $pinjamAktif ? '#555' : '#000' }};">
+                {{ $pinjamAktif ? 'Kembalikan' : 'Pinjam' }}
+            </button>
+        </form>
+
     </section>
 @endsection

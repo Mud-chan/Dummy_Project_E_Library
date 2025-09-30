@@ -11,6 +11,8 @@ use App\Models\Genre;
 use App\Models\Rating;
 use App\Models\Bookmark;
 use App\Models\Detail_buku;
+use Carbon\Carbon;
+use Illuminate\Support\Str;
 
 class BukuPengunjungController extends Controller
 {
@@ -165,4 +167,46 @@ class BukuPengunjungController extends Controller
         ]);
     }
 
+    public function pinjam($id_buku)
+    {
+        $this->authorizePengunjung();
+        $userId = Auth::id();
+
+        // cek apakah user sudah pernah pinjam buku ini dan belum dikembalikan
+        $peminjaman = Peminjaman::where('id_buku', $id_buku)
+            ->where('id_pengunjung', $userId)
+            ->where('status', 'dipinjam')
+            ->first();
+
+        if ($peminjaman) {
+            // kalau sudah dipinjam -> berarti klik tombol untuk kembalikan
+            $peminjaman->update([
+                'status'      => 'dikembalikan',
+                'tgl_kembali' => Carbon::now(),
+            ]);
+
+            return back()->with('success', 'Buku berhasil dikembalikan!');
+        } else {
+            // 🔹 Tambahin pengecekan jumlah pinjaman aktif
+            $jumlahPinjamanAktif = Peminjaman::where('id_pengunjung', $userId)
+                ->where('status', 'dipinjam')
+                ->count();
+
+            if ($jumlahPinjamanAktif >= 3) {
+                return back()->with('error', 'Kamu sudah mencapai maksimal pinjam (3 buku). Harap kembalikan buku terlebih dahulu.');
+            }
+
+            // kalau belum -> buat data pinjam baru
+            Peminjaman::create([
+                'id_peminjaman' => 'PMJ_' . Str::random(8),
+                'id_pengunjung' => $userId,
+                'id_buku'       => $id_buku,
+                'status'        => 'dipinjam',
+                'tgl_pinjam'    => Carbon::now(),
+                'tgl_kembali'   => null,
+            ]);
+
+            return back()->with('success', 'Buku berhasil dipinjam!');
+        }
+    }
 }
