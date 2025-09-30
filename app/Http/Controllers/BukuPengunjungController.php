@@ -209,4 +209,36 @@ class BukuPengunjungController extends Controller
             return back()->with('success', 'Buku berhasil dipinjam!');
         }
     }
+
+    public function riwayat_pinjam()
+    {
+        $this->authorizePengunjung();
+        $userId = Auth::id();
+
+        // Ambil semua buku yg pernah dipinjam user dengan status dikembalikan
+        $riwayat = Peminjaman::with(['buku.genres'])
+            ->where('id_pengunjung', $userId)
+            ->where('status', 'dikembalikan')
+            ->orderBy('tgl_kembali', 'desc')
+            ->paginate(6);
+
+        $genreList = Genre::select('tag')
+            ->distinct()
+            ->pluck('tag')
+            ->filter()
+            ->take(10)
+            ->values();
+
+        // Kita ambil bukunya saja biar sesuai blade
+        $books = $riwayat->getCollection()->pluck('buku');
+
+        // Override collection ke paginator supaya pagination tetap jalan
+        $riwayat->setCollection($books);
+
+        return view('riwayat_pinjam_pengunjung', [
+            "title"     => "Riwayat Peminjaman",
+            "contents"  => $riwayat,
+            "genreList" => $genreList,
+        ]);
+    }
 }

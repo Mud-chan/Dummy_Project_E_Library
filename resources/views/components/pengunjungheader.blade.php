@@ -92,16 +92,18 @@
                         </div>
                     </a>
 
-
-                    <div class="sidebar-item">
-                        <img src="{{ asset('assets/images/bookmark.svg') }}" alt="Bookmark icon" />
-                        <span>Bookmark</span>
-                    </div>
-
                     <div class="sidebar-item">
                         <img src="{{ asset('assets/images/setting-setting.svg') }}" alt="Borrow icon" />
                         <span>Peminjaman</span>
                     </div>
+
+                    <a href="{{ route('riwayat.pinjam.pengunjung') }}">
+                        <div class="sidebar-item">
+                            <img src="{{ asset('assets/images/bookmark.svg') }}" alt="Bookmark icon" />
+                            <span>Riwayat Peminjaman</span>
+                        </div>
+                    </a>
+
 
                     <form method="POST" action="{{ route('logout') }}" id="logout-form">
                         @csrf
