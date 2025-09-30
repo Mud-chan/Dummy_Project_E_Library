@@ -53,8 +53,8 @@ Route::middleware(['auth'])->group(function () {
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard-pengunjung', [BukuPengunjungController::class, 'index'])->name('dashboard.pengunjung');
-    Route::get('/koleksi-petugas', [BukuPengunjungController::class, 'koleksi'])->name('koleksi.petugas');
-    Route::get('/buku/{id_buku}/detail', [BukuPengunjungController::class, 'detail_buku'])->name('buku.detail');
-    Route::get('/cari-buku', [BukuPengunjungController::class, 'cari_buku'])->name('cari.buku');
-    Route::get('/detail-genre-petugas', [BukuPengunjungController::class, 'show_genre'])->name('genre.detail');
+    Route::get('/koleksi-pengunjung', [BukuPengunjungController::class, 'koleksi'])->name('koleksi.pengunjung');
+    Route::get('/buku/{id_buku}/detail/pengunjung', [BukuPengunjungController::class, 'detail_buku'])->name('buku.detail.pengunjung');
+    Route::get('/cari-buku-pengunjung', [BukuPengunjungController::class, 'cari_buku'])->name('cari.buku.pengunjung');
+    Route::get('/detail-genre-pengunjung', [BukuPengunjungController::class, 'show_genre'])->name('genre.detail.pengunjung');
 });

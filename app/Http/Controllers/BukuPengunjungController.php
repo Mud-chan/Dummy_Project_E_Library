@@ -15,7 +15,7 @@ use App\Models\Detail_buku;
 class BukuPengunjungController extends Controller
 {
 
-    private function authorizePetugas()
+    private function authorizePengunjung()
     {
         if (!Auth::check()) {
             return redirect()->route('login')->with('error', 'Silakan login terlebih dahulu.')->send();
@@ -27,7 +27,7 @@ class BukuPengunjungController extends Controller
 
     public function index()
     {
-        $this->authorizePetugas();
+        $this->authorizePengunjung();
 
         $contents = Buku::with('genres')
             ->withCount('peminjaman')
@@ -57,7 +57,7 @@ class BukuPengunjungController extends Controller
 
     public function koleksi()
     {
-        $this->authorizePetugas();
+        $this->authorizePengunjung();
 
         $contents = Buku::with('genres') // <- ini relasi yg benar
             ->withCount('peminjaman')
@@ -111,7 +111,7 @@ class BukuPengunjungController extends Controller
 
     public function cari_buku(Request $request)
     {
-        $this->authorizePetugas();
+        $this->authorizePengunjung();
 
         $query = Buku::with('genres')
             ->withCount('peminjaman')
