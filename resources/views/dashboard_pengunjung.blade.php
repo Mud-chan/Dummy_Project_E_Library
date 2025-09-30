@@ -11,15 +11,29 @@
 
         <div class="books-grid">
             @foreach ($popularBooks as $buku)
-                <div class="book-card">
-                    <a href="{{ route('buku.detail.pengunjung', $buku->id_buku) }}">
+                @php
+                    $peminjamanAktif = $buku->peminjaman->where('status', 'dipinjam')->first();
+                    $sedangDipinjam = $peminjamanAktif && $peminjamanAktif->id_pengunjung !== Auth::id();
+                @endphp
+
+                <div class="book-card relative">
+                    @if ($sedangDipinjam)
+                        {{-- Kalau sedang dipinjam: tidak bisa diklik, judul diganti --}}
                         <img src="{{ asset('uploaded_files/' . $buku->thumb) }}" alt="Cover {{ $buku->judul }}"
-                            class="book-cover" />
-                    </a>
-                    <div class="book-title">{{ \Illuminate\Support\Str::limit($buku->judul, 20, '...') }}</div>
+                            class="book-cover opacity-60" />
+                        <div class="book-title font-bold text-red-600">Sedang Dipinjam</div>
+                    @else
+                        {{-- Kalau tidak dipinjam: normal bisa diklik --}}
+                        <a href="{{ route('buku.detail.pengunjung', $buku->id_buku) }}">
+                            <img src="{{ asset('uploaded_files/' . $buku->thumb) }}" alt="Cover {{ $buku->judul }}"
+                                class="book-cover" />
+                        </a>
+                        <div class="book-title">{{ \Illuminate\Support\Str::limit($buku->judul, 20, '...') }}</div>
+                    @endif
                 </div>
             @endforeach
         </div>
+
     </section>
 
     <div class="section-header">
@@ -28,12 +42,29 @@
 
     <section class="book-collection">
         @foreach ($contents as $book)
-            <article class="book-item">
-                <div class="book-content">
-                    <a href="{{ route('buku.detail.pengunjung', $book->id_buku) }}">
+            @php
+                $peminjamanAktif = $book->peminjaman->where('status', 'dipinjam')->first();
+                $sedangDipinjam = $peminjamanAktif && $peminjamanAktif->id_pengunjung !== Auth::id();
+            @endphp
+
+            <article class="book-item relative">
+                {{-- Overlay kalau sedang dipinjam --}}
+                @if ($sedangDipinjam)
+                    <div class="absolute inset-0 bg-white bg-opacity-70 flex items-center justify-center rounded-lg z-10">
+                        <span class="text-black font-bold text-lg">Buku Sedang Dipinjam</span>
+                    </div>
+                @endif
+
+                <div class="book-content {{ $sedangDipinjam ? 'opacity-60 pointer-events-none' : '' }}">
+                    @if (!$sedangDipinjam)
+                        <a href="{{ route('buku.detail.pengunjung', $book->id_buku) }}">
+                            <img src="{{ asset('uploaded_files/' . $book->thumb) }}" alt="Cover {{ $book->judul }}"
+                                class="book-image" />
+                        </a>
+                    @else
                         <img src="{{ asset('uploaded_files/' . $book->thumb) }}" alt="Cover {{ $book->judul }}"
                             class="book-image" />
-                    </a>
+                    @endif
 
                     <div class="book-info">
                         <div class="book-header">

@@ -57,27 +57,31 @@ class BukuPengunjungController extends Controller
         ]);
     }
 
-    public function koleksi()
-    {
-        $this->authorizePengunjung();
+public function koleksi()
+{
+    $this->authorizePengunjung();
 
-        $contents = Buku::with('genres') // <- ini relasi yg benar
-            ->withCount('peminjaman')
-            ->orderBy('date_created', 'DESC')
-            ->paginate(6);
-        $genreList = Genre::select('tag')
-            ->distinct()
-            ->pluck('tag')
-            ->filter() // hilangkan null/empty
-            ->take(10)
-            ->values();
+    $contents = Buku::with(['genres', 'peminjaman' => function ($q) {
+            $q->where('status', 'dipinjam');
+        }])
+        ->withCount('peminjaman')
+        ->orderBy('date_created', 'DESC')
+        ->paginate(6);
 
-        return view('koleksi_pengunjung', [
-            "title"    => "Buku",
-            "contents" => $contents,
-            "genreList"    => $genreList,
-        ]);
-    }
+    $genreList = Genre::select('tag')
+        ->distinct()
+        ->pluck('tag')
+        ->filter()
+        ->take(10)
+        ->values();
+
+    return view('koleksi_pengunjung', [
+        "title"     => "Buku",
+        "contents"  => $contents,
+        "genreList" => $genreList,
+    ]);
+}
+
 
     public function detail_buku($id_buku)
     {

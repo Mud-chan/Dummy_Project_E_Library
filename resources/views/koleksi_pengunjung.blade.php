@@ -10,12 +10,28 @@
     <!-- Book Collection -->
     <section class="book-collection">
         @forelse ($contents as $book)
-            <article class="book-item">
-                <div class="book-content">
-                    <a href="{{ route('buku.detail.pengunjung', $book->id_buku) }}">
+            @php
+                $peminjamanAktif = $book->peminjaman->first();
+                $sedangDipinjam = $peminjamanAktif && $peminjamanAktif->id_pengunjung !== Auth::id();
+            @endphp
+
+            <article class="book-item relative">
+                @if ($sedangDipinjam)
+                    <div class="absolute inset-0 bg-white bg-opacity-70 flex items-center justify-center rounded-lg z-10">
+                        <span class="text-black font-bold text-xl">Buku Sedang Dipinjam</span>
+                    </div>
+                @endif
+
+                <div class="book-content {{ $sedangDipinjam ? 'opacity-60 pointer-events-none' : '' }}">
+                    @if (!$sedangDipinjam)
+                        <a href="{{ route('buku.detail.pengunjung', $book->id_buku) }}">
+                            <img src="{{ asset('uploaded_files/' . $book->thumb) }}" alt="Cover {{ $book->judul }}"
+                                class="book-image" />
+                        </a>
+                    @else
                         <img src="{{ asset('uploaded_files/' . $book->thumb) }}" alt="Cover {{ $book->judul }}"
                             class="book-image" />
-                    </a>
+                    @endif
 
                     <div class="book-info">
                         <div class="book-header">
@@ -51,7 +67,6 @@
                                 </a>
                             @endforeach
                         </div>
-
                     </div>
                 </div>
             </article>
@@ -59,6 +74,8 @@
             <p style="text-align:center; margin-top:20px;">Belum ada buku yang tersedia.</p>
         @endforelse
     </section>
+
+
 
     <!-- Pagination -->
     <div class="pagination-container">
