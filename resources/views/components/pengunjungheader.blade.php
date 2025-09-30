@@ -25,7 +25,7 @@
         <div class="content-wrapper">
             <!-- Left Sidebar -->
             <aside class="sidebar">
-                <a href="{{ route('dashboard.petugas') }}">
+                <a href="{{ route('dashboard.pengunjung') }}">
                     <img src="{{ asset('assets/images/img_sidebar_logo.png') }}" alt="E-Library Logo"
                         class="sidebar-logo" />
                 </a>
@@ -39,7 +39,7 @@
                             $kategoriDipilih = request('kategori');
                         @endphp
                         @foreach ($kategoriList as $kategori)
-                            <a href="{{ route('cari.buku', ['kategori' => $kategori, 'genre' => request('genre')]) }}"
+                            <a href="{{ route('cari.buku.pengunjung', ['kategori' => $kategori, 'genre' => request('genre')]) }}"
                                 class="menu-item {{ $kategoriDipilih === $kategori ? 'active-item' : '' }}">
                                 <img src="{{ asset('assets/images/book.svg') }}" alt="{{ $kategori }} icon" />
                                 <span>{{ ucfirst($kategori) }}</span>
@@ -56,7 +56,7 @@
                     <button class="mobile-menu-btn" aria-label="Open menu">☰</button>
 
                     <div class="search-container">
-                        <form action="{{ route('cari.buku') }}" method="GET">
+                        <form action="{{ route('cari.buku.pengunjung') }}" method="GET">
                             <input type="search" name="q" class="search-input" placeholder="Cari Buku"
                                 value="{{ request('q') }}" aria-label="Search books" />
                             <button type="submit" style="border:none;background:none;">
@@ -116,7 +116,7 @@
                 <div class="sidebar-section">
                     <div class="filter-header">
                         <h2>Filter</h2>
-                        <a href="{{ route('genre.detail') }}" class="view-all">Lainya</a>
+                        <a href="{{ route('genre.detail.pengunjung') }}" class="view-all">Lainya</a>
                     </div>
 
                     @php
@@ -124,7 +124,7 @@
                     @endphp
 
                     @forelse ($genreList as $genre)
-                        <a href="{{ route('cari.buku', ['genre' => $genre, 'kategori' => request('kategori')]) }}"
+                        <a href="{{ route('cari.buku.pengunjung', ['genre' => $genre, 'kategori' => request('kategori')]) }}"
                             class="sidebar-item {{ $genreDipilih === $genre ? 'active-item' : '' }}">
 
                             <span>{{ ucfirst($genre) }}</span>
