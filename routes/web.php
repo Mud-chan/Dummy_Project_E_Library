@@ -27,6 +27,9 @@ Route::get('/pengunjung/dashboard', [AuthController::class, 'dashboardPengunjung
 
 // Logout
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+// Profile
+Route::get('/profile', [AuthController::class, 'showProfile'])->name('profile.show');
+Route::put('/profile', [AuthController::class, 'updateProfile'])->name('profile.update');
 
 use App\Http\Controllers\BukuController;
 

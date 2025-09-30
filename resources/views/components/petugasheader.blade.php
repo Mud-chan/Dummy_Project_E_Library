@@ -17,7 +17,8 @@
             <!-- Left Sidebar -->
             <aside class="sidebar">
                 <a href="{{ route('dashboard.petugas') }}" style="text-decoration: none;">
-                    <img src="{{ asset('assets/images/img_sidebar_logo.png') }}" alt="E-Library Logo" class="sidebar-logo" />
+                    <img src="{{ asset('assets/images/img_sidebar_logo.png') }}" alt="E-Library Logo"
+                        class="sidebar-logo" />
                 </a>
 
                 <div class="sidebar-section">
@@ -51,9 +52,13 @@
                     </div>
 
                     <nav class="header-nav">
-                        <a href="#" class="nav-item">{{ Auth::user()->name }} ({{ Auth::user()->role }})</a>
-                        <img src="{{ asset('assets/images/miruko_vol_10.jpg') }}" alt="User avatar" class="user-avatar" />
+                        <a href="{{ route('profile.show') }}" class="nav-item">{{ Auth::user()->name }} ({{ Auth::user()->role }})</a>
+                        <a href="{{ route('profile.show') }}" style="text-decoration: none;">
+                            <img src="{{ Auth::user()->image ? asset('uploaded_profiles/' . Auth::user()->image) : asset('assets/images/no-cover.png') }}"
+                                alt="User avatar" class="user-avatar" />
+                        </a>
                     </nav>
+
                 </header>
 
                 <main>

@@ -6,15 +6,15 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Rating extends Model
+class Suka extends Model
 {
-    protected $table = 'rating';
+    protected $table = 'suka';
     protected $primaryKey = null;
     public $incrementing = false;
     public $timestamps = false;
 
     protected $fillable = [
-        'id_pengunjung', 'id_buku', 'rating'
+        'id_buku', 'id_pengunjung'
     ];
 
     public function user()

@@ -9,7 +9,6 @@ use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
-    // Register
     public function register(Request $request)
     {
         $request->validate([
@@ -18,7 +17,15 @@ class AuthController extends Controller
             'password' => 'required|string|min:6|confirmed',
             'nohp'     => 'required|string|max:15',
             'role'     => 'required|in:petugas,pengunjung',
+            'image'    => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5048',
         ]);
+
+        $imageName = null;
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $imageName = time() . '_' . uniqid() . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path('uploaded_profiles'), $imageName);
+        }
 
         User::create([
             'name'     => $request->name,
@@ -26,10 +33,54 @@ class AuthController extends Controller
             'password' => Hash::make($request->password),
             'nohp'     => $request->nohp,
             'role'     => $request->role,
+            'image'    => $imageName,
         ]);
 
         return redirect()->route('login')->with('success', 'Registrasi berhasil! Silakan login.');
     }
+
+    // Tampil profil
+    public function showProfile()
+    {
+        $user = Auth::user();
+        return view('profile_petugas', compact('user'));
+    }
+
+    // Update profil
+    public function updateProfile(Request $request)
+    {
+        /** @var \App\Models\User $user */
+        $user = Auth::user();
+
+        $request->validate([
+            'name'  => 'required|string|max:255',
+            'email' => 'required|string|email|unique:users,email,' . $user->id,
+            'nohp'  => 'required|string|max:15',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5048',
+        ]);
+
+        // Update data dasar
+        $user->name  = $request->name;
+        $user->email = $request->email;
+        $user->nohp  = $request->nohp;
+
+        // Update foto kalau ada
+        if ($request->hasFile('image')) {
+            if ($user->image && file_exists(public_path('uploaded_profiles/' . $user->image))) {
+                unlink(public_path('uploaded_profiles/' . $user->image));
+            }
+
+            $image = $request->file('image');
+            $imageName = time() . '_' . uniqid() . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path('uploaded_profiles'), $imageName);
+            $user->image = $imageName;
+        }
+
+        $user->save();
+
+        return back()->with('success', 'Profil berhasil diperbarui');
+    }
+
 
     // Login
     public function login(Request $request)
