@@ -44,7 +44,7 @@
 
                         <div class="book-tags">
                             @foreach ($book->genres as $tag)
-                                <a href="{{ route('cari.buku', ['genre' => $tag->tag, 'kategori' => request('kategori')]) }}"
+                                <a href="{{ route('cari.buku.pengunjung', ['genre' => $tag->tag, 'kategori' => request('kategori')]) }}"
                                     class="tag" style="text-decoration:none;">
                                     <img src="{{ asset('assets/images/img_image_1.png') }}"
                                         alt="{{ $tag->tag }} tag" />

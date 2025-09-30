@@ -136,7 +136,7 @@ class BukuPengunjungController extends Controller
 
         $contents = $query->get();
 
-        return view('cari_buku_petugas', [
+        return view('cari_buku_pengunjung', [
             "title"    => "Cari Buku",
             "contents" => $contents,
             "genreList"    => $genreList,
@@ -158,7 +158,7 @@ class BukuPengunjungController extends Controller
             ->take(10)
             ->values();
 
-        return view('detail_genre_petugas', [
+        return view('detail_genre_pengunjung', [
             'title'     => 'Daftar Genre',
             'genres'    => $genres,
             'genreList' => $genreList,
