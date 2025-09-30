@@ -92,10 +92,12 @@
                         </div>
                     </a>
 
-                    <div class="sidebar-item">
-                        <img src="{{ asset('assets/images/setting-setting.svg') }}" alt="Borrow icon" />
-                        <span>Peminjaman</span>
-                    </div>
+                    <a href="{{ route('show.pinjam.pengunjung') }}">
+                        <div class="sidebar-item">
+                            <img src="{{ asset('assets/images/bookmark.svg') }}" alt="Bookmark icon" />
+                            <span>Peminjaman</span>
+                        </div>
+                    </a>
 
                     <a href="{{ route('riwayat.pinjam.pengunjung') }}">
                         <div class="sidebar-item">

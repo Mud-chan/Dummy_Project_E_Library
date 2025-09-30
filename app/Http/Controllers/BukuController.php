@@ -286,7 +286,7 @@ class BukuController extends Controller
         $genreList = Genre::select('tag')
             ->distinct()
             ->pluck('tag')
-            ->filter() // hilangkan null/empty
+            ->filter()
             ->take(10)
             ->values();
 
@@ -294,11 +294,14 @@ class BukuController extends Controller
             $buku = Buku::with(['genres', 'rating', 'bookmark', 'peminjaman.user'])
                 ->findOrFail($id_buku);
 
+            // hanya ambil peminjaman yang masih aktif (status = dipinjam)
+            $peminjamanAktif = $buku->peminjaman->where('status', 'dipinjam');
+
             return view('detail_buku_petugas', [
                 "title"      => "Detail Buku",
                 "book"       => $buku,
-                "peminjaman" => $buku->peminjaman,
-                "genreList"    => $genreList,
+                "peminjaman" => $peminjamanAktif,
+                "genreList"  => $genreList,
             ]);
         } catch (\Exception $e) {
             Log::error('Detail Buku gagal', [
@@ -308,6 +311,7 @@ class BukuController extends Controller
             return redirect()->route('koleksi.petugas')->with('error', 'Gagal membuka detail buku');
         }
     }
+
 
 
 
