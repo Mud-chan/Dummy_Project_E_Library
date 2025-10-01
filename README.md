@@ -21,38 +21,38 @@ Aplikasi ini mendukung dua role utama: **Petugas** dan **Pengunjung**.
    git clone https://github.com/Mud-chan/Dummy_Project_E_Library.git
    
 2. **Install dependencies**
-composer install
-npm install && npm run dev
+    composer install
+    npm install && npm run dev
 
 4. **Generate app key**
-php artisan key:generate
+    php artisan key:generate
 
 6. **Atur konfigurasi database di file .env**
-DB_CONNECTION=mysql
-DB_HOST=127.0.0.1
-DB_PORT=3306
-DB_DATABASE=e_library
-DB_USERNAME=root
-DB_PASSWORD=
+    DB_CONNECTION=mysql
+    DB_HOST=127.0.0.1
+    DB_PORT=3306
+    DB_DATABASE=e_library
+    DB_USERNAME=root
+    DB_PASSWORD=
 
 7. **Migrasi & seeder**
-php artisan migrate --seed
+    php artisan migrate --seed
 
 8. **Jalankan server**
-php artisan serve
+    php artisan serve
 
 
 👥 Roles
-Petugas
--Manajemen buku
--Manajemen genre
--Mengatur peminjaman
+    Petugas
+    -Manajemen buku
+    -Manajemen genre
+    -Mengatur peminjaman
 
-Pengunjung
--Melihat daftar buku
--Membaca detail buku
--Pinjam dan kembalikan buku
+    Pengunjung
+    -Melihat daftar buku
+    -Membaca detail buku
+    -Pinjam dan kembalikan buku
 
 User Login
-Petugas → petugas@example.com | password123
-Pengunjung → pengunjung@example.com | password123
+    Petugas → petugas@example.com | password123
+    Pengunjung → pengunjung@example.com | password123
