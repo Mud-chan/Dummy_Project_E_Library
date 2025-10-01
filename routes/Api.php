@@ -2,20 +2,17 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthApiController;
+use App\Http\Controllers\Api\PeminjamanApiController;
 
-// Auth API
+// Auth
 Route::post('/register', [AuthApiController::class, 'register']);
 Route::post('/login', [AuthApiController::class, 'login']);
 
-// Route yang butuh login Sanctum
 Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/profile', [AuthApiController::class, 'profile']);
+    Route::post('/update-profile', [AuthApiController::class, 'updateProfile']);
     Route::post('/logout', [AuthApiController::class, 'logout']);
 
-    Route::middleware('role:petugas')->get('/dashboard/petugas', function () {
-        return response()->json(['message' => 'Halo Petugas']);
-    });
-
-    Route::middleware('role:pengunjung')->get('/dashboard/pengunjung', function () {
-        return response()->json(['message' => 'Halo Pengunjung']);
-    });
+    // Peminjaman
+    Route::get('/riwayat-pinjam', [PeminjamanApiController::class, 'riwayatPinjam']);
 });

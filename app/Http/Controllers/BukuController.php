@@ -474,12 +474,10 @@ class BukuController extends Controller
             ->values();
 
         try {
-            // 🔹 Ambil semua data peminjaman dengan relasi user & buku
             $peminjaman = Peminjaman::with(['user', 'buku'])
                 ->orderBy('tgl_pinjam', 'DESC')
                 ->paginate(20);
 
-            // 🔹 Hitung jumlah buku yang tersedia (tidak dipinjam / sudah dikembalikan)
             $tersedia = Peminjaman::where(function ($q) {
                 $q->where('status', '!=', 'dipinjam')
                     ->orWhereNull('status');
